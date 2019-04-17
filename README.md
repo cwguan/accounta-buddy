@@ -2,4 +2,4 @@
 
 Project for COGS 121: Human-Computer Interaction Programming Studio
 
-Milestone 1
+[Milestone 1](./milestone1.md)
