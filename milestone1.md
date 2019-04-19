@@ -24,7 +24,7 @@ Our target audience is older people (middle-aged specifically) trying to re-spar
 We are not part of that user population because we aren’t middle-aged, have kids, or need to make significant lifestyle changes. At this point, as college students, we are still discovering who we are, what our interests are, and don’t usually have dependents. Thus, we are not at the point of trying to re-spark our lives.
 
 ## Possible Real-World Data and/or APIs
-Since our application will send money peer-to-peer, we might possibly use payment APIs from: 
+Since our application will send money peer-to-peer, we might possibly use payment APIs from:
 - Square
 - PayPal
 - Facebook PayPal
@@ -35,8 +35,14 @@ Since our application would require setting up accounts, storing information, ma
 - [Cloud Storage](https://firebase.google.com/products/storage/)
 
 ## Storyboard 1
+![Storyboard1](./milestone1-images/storyboard1.png)
+
+This storyboard highlights the first example we gave under the Target Audience section. Here, we have the setting of two adults trying to get back into the habit of working out again. The two friends use the app to be able to make this fun and to keep each other accountable.
 
 ## Storyboard 2
+![Storyboard2](./milestone1-images/storyboard2.jpg)
+
+This storyboard highlights the second example we gave under the Target Audience section. Here, we have the setting of regular household, a mother, and her son. The mother is trying to help son develop good habits.
 
 ## Prototype 1
 
