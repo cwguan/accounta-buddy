@@ -45,5 +45,16 @@ This storyboard highlights the first example we gave under the Target Audience s
 This storyboard highlights the second example we gave under the Target Audience section. Here, we have the setting of regular household, a mother, and her son. The mother is trying to help son develop good habits.
 
 ## Prototype 1
+![Prototype1-1](./milestone1-images/prototype1-1.jpg)
+![Prototype1-2](./milestone1-images/prototype1-2.jpg)
+![Prototype1-3](./milestone1-images/prototype1-3.jpg)
+![Prototype1-4](./milestone1-images/prototype1-4.jpg)
+![Prototype1-5](./milestone1-images/prototype1-5.jpg)
+![Prototype1-6](./milestone1-images/prototype1-6.jpg)
 
 ## Prototype 2
+![Prototype2-1](./milestone1-images/prototype2-1.jpg)
+![Prototype2-2](./milestone1-images/prototype2-2.jpg)
+![Prototype2-3](./milestone1-images/prototype2-3.jpg)
+![Prototype2-4](./milestone1-images/prototype2-4.jpg)
+![Prototype2-5](./milestone1-images/prototype2-5.jpg)
