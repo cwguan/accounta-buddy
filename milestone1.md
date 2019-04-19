@@ -29,7 +29,7 @@ Since our application will send money peer-to-peer, we might possibly use paymen
 - PayPal
 - Facebook PayPal
 
-Since our application would require setting up accounts, storing information, maintaining media (photos, etc.), we will highly use Google's Firebase and the APIs they provide with:
+Since our application would require setting up accounts, storing information, maintaining media (photos, etc.), we will likely use Google's Firebase and the APIs they provide with:
 - [Authentication](https://firebase.google.com/products/auth/)
 - [Firestore](https://firebase.google.com/products/firestore/)
 - [Cloud Storage](https://firebase.google.com/products/storage/)
