@@ -45,6 +45,7 @@ This storyboard highlights the first example we gave under the Target Audience s
 This storyboard highlights the second example we gave under the Target Audience section. Here, we have the setting of regular household, a mother, and her son. The mother is trying to help son develop good habits.
 
 ## Prototype 1
+The prototype below showcases one potential dashboard that our application might have. It highlights actions such as submitting evidence for your task, getting notifications, and creating a new challenge. Additional potential pages allow users to see their history and friends' activity.
 ![Prototype1-1](./milestone1-images/prototype1-1.jpg)
 ![Prototype1-2](./milestone1-images/prototype1-2.jpg)
 ![Prototype1-3](./milestone1-images/prototype1-3.jpg)
@@ -53,6 +54,7 @@ This storyboard highlights the second example we gave under the Target Audience 
 ![Prototype1-6](./milestone1-images/prototype1-6.jpg)
 
 ## Prototype 2
+Our second below showcases another UI our application might have for the application. Here, we have a different potential idea of how creating a new challenge might look like. Additionally, it highlights the action of adding Accounta-Bux to your account. This prototype places more emphasis on the tasks that you need to complete yourself rather than your Accounta-Buddies' activity.
 ![Prototype2-1](./milestone1-images/prototype2-1.jpg)
 ![Prototype2-2](./milestone1-images/prototype2-2.jpg)
 ![Prototype2-3](./milestone1-images/prototype2-3.jpg)
