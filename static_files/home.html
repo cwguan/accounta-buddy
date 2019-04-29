@@ -1,0 +1,35 @@
+<html>
+<head>
+<title>Accounta-Buddy</title>
+
+<script src="jquery-3.3.1.min.js"></script>
+
+<script type="text/javascript">
+// jQuery convention for running when the document has been fully loaded:
+$(document).ready(() => {
+  // define a generic Ajax error handler:
+  // http://api.jquery.com/ajaxerror/
+  $(document).ajaxError(() => {
+    $('#status').html('Error: unknown ajaxError!');
+  });
+
+  // TODO remove for Accounta-Buddy
+  $.ajax({
+      url: 'users',
+      type: 'GET',
+      dataType : 'json',
+      success: (data) => {
+        console.log('You received some data!', data);
+        $('#status').html('All users: ' + data);
+      },
+    });
+});
+</script>
+
+</head>
+<body>
+  <h1>Welcome to Accounta-Buddy!</h1>
+  <div id='status'></div>
+
+</body>
+</html>
