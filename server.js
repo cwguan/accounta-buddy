@@ -3,23 +3,111 @@ const app = express();
 
 app.use(express.static('static_files'));
 
-// TODO Replace w/ Accounta-Buddy fake data
-const fakeDatabase = {
-  'Philip': {job: 'professor', pet: 'cat.jpg'},
-  'John': {job: 'student',   pet: 'dog.jpg'},
-  'Carol': {job: 'engineer',  pet: 'bear.jpg'}
+/* ====== FAKE DATABASE ====== */
+// Users database based off their uid (will likely get uid from Firebase Auth)
+const fakeUsersDatabase = {
+  '1': {name: 'Chris', balance: 123, challenges: ['challenge1uid', 'challenge2uid']},
+  '2': {name: 'Jerry', balance: 456, challenges: ['challenge1uid', 'challenge2uiid']},
+  '3': {name: 'Nathan', balance: 789, challenges: ['challenge3uid']},
+  '4': {name: 'Steven', balance: 1234, challenges: ['challenge3uid']}
 };
 
+// Will need some kind of uid for each challenge to identify them in the database
+// TODO: Figure out uid for challenge
+// TODO: Check-in time format
+const fakeChallengesDatabase = {
+  'challenge1uid': {
+    participants: ['1', '2'],
+    participantNames: ['Chris', 'Jerry'],
+    title: 'Workout',
+    checkInTime: '10:00pm',
+    checkIns: {
+      'April 30th': {
+        '1': {
+          description: "Hit a new PR, going up tomorrow!",
+          photo: "Some link to photo in our database for participant 1",
+          location: "GPS coordinates OR NA depending on challenge"
+        },
+        '2': {
+          description: "Legs super sore from hiking, wasn't a good leg day",
+          photo: "Some link to photo in our database for particpant 2",
+          location: "GPS coordinates OR NA depending on challenge"
+        }
+      },
+      'May 1st': {
+        '1': {
+          description: "new weight felt good, going to stick with it",
+          photo: "Some link to photo in our database for participant 1",
+          location: "GPS coordinates OR NA depending on challenge"
+        },
+        '2': {
+          description: "Stretching and icing legs helped, legs feel back to normal",
+          photo: "Some link to photo in our database for particpant 2",
+          location: "GPS coordinates OR NA depending on challenge"
+        }
+      }
+    }
+  },
+  'challenge2uid': {
+    participants: ['1', '2'],
+    participantNames: ['Chris', 'Jerry'],
+    title: 'Create a Meme',
+    checkInTime: '5:00pm',
+    checkIns: {
+      'April 30th': {
+        '1': {
+          description: "here's my meme",
+          photo: "Some link to photo in our database for participant 1",
+          location: "GPS coordinates OR NA depending on challenge"
+        },
+        '2': {
+          description: "such meme wow",
+          photo: "Some link to photo in our database for particpant 2",
+          location: "GPS coordinates OR NA depending on challenge"
+        }
+      }
+    }
+  },
+  'challenge3uid': {
+    participants: ['3', '4'],
+    participantNames: ['Nathan', 'Steven'],
+    title: 'Sleep 8 hours',
+    checkInTime: '11:00am',
+    checkIns: {
+      'April 30th': {
+        '3': {
+          description: "Got 7.5 hours, feel great",
+          photo: "Some link to photo in our database for participant 3",
+          location: "GPS coordinates OR NA depending on challenge"
+        },
+        '4': {
+          description: "scaaaaary ass dream last night, don't feel nice",
+          photo: "Some link to photo in our database for particpant 4",
+          location: "GPS coordinates OR NA depending on challenge"
+        }
+      }
+    }
+  },
+};
+
+
+/* ====== ENDPOINTS ====== */
+// Gets a name of all of the users in the database
 app.get('/users', (req, res) => {
-  const allUsernames = Object.keys(fakeDatabase); // returns a list of object keys
-  console.log('allUsernames is:', allUsernames);
-  res.send(allUsernames);
+  const allUserUIDs = Object.keys(fakeUsersDatabase); // returns a list of object keys
+  const allUserNames = [];
+  allUserUIDs.forEach((user) => {
+    console.log(user, ':', fakeUsersDatabase[user].name);
+    allUserNames.push(fakeUsersDatabase[user].name);
+  });
+  res.send(allUserNames);
 });
 
 
+// Get info about one user including their name, balance, challenges in
 app.get('/users/:userid', (req, res) => {
   const nameToLookup = req.params.userid; // matches ':userid' above
-  const val = fakeDatabase[nameToLookup];
+  const val = fakeUsersDatabase[nameToLookup];
   console.log(nameToLookup, '->', val); // for debugging
   if (val) {
     res.send(val);
@@ -27,6 +115,33 @@ app.get('/users/:userid', (req, res) => {
     res.send({}); // failed, so return an empty object instead of undefined
   }
 });
+
+
+// Gets a list of all of the challenge's uids
+app.get('/challenges', (req, res) => {
+  const allChallengesUID = Object.keys(fakeChallengesDatabase);
+  console.log(allChallengesUID);
+  res.send(allChallengesUID);
+});
+
+
+// Gets all of the challenges a user participates in and each challenges' info
+app.get('/challenges/:userid', (req, res) => {
+  const userToLookup = req.params.userid;
+  const user = fakeUsersDatabase[userToLookup];
+  if (user) {
+    const challengesInfo = {};
+    user.challenges.forEach((challenge) => {
+      challengesInfo[challenge] = fakeChallengesDatabase[challenge];
+    });
+    console.log(challengesInfo);
+    res.send(challengesInfo);
+  } else {
+    console.log("User with uid", userToLookup, "not found");
+    res.send({});
+  }
+});
+
 
 // start the server at URL: http://localhost:3000/
 app.listen(3000, () => {
