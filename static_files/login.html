@@ -8,33 +8,31 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="jquery-3.3.1.min.js"></script>
-    
-    <script type="text/javascript">
-    // jQuery convention for running when the document has been fully loaded:
-    $(document).ready(() => {
-      // define a generic Ajax error handler:
-      // http://api.jquery.com/ajaxerror/
-      $(document).ajaxError(() => {
-        $('#status').html('Error: unknown ajaxError!');
-      });
 
-      // TODO remove for Accounta-Buddy
-      $.ajax({
-          url: 'users',
-          type: 'GET',
-          dataType : 'json',
-          success: (data) => {
-            console.log('You received some data!', data);
-            $('#status').html('All users: ' + data);
-          },
+    <script type="text/javascript">
+      $(document).ready(() => {
+        $(document).ajaxError(() => {
+          $('#status').html('Error: unknown ajaxError!');
         });
-    });
+      });
     </script>
 
   </head>
-  <body>
-    <h1>Welcome to Accounta-Buddy! This is the landing page</h1>
-    <div id='status'></div>
-    <p><a href="dashboard.html">Enter dashboard</a></p>
+  <body class="container">
+    <h1>Welcome to Accounta-Buddy!</h1>
+
+    <!-- TODO RE-DO EVENTUALLY WITH FIREBASE AUTH -->
+    <form>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+      </div>
+      <a class="btn btn-primary" href="dashboard.html" role="button">Log In</a>
+    </form>
   </body>
 </html>

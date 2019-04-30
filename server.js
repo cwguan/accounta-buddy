@@ -20,6 +20,8 @@ const fakeChallengesDatabase = {
     participants: ['1', '2'],
     participantNames: ['Chris', 'Jerry'],
     title: 'Workout',
+    description: 'Each person will get a workout in everyday',
+    cost: 2,
     checkInTime: '10:00pm',
     checkIns: {
       'April 30th': {
@@ -52,6 +54,8 @@ const fakeChallengesDatabase = {
     participants: ['1', '2'],
     participantNames: ['Chris', 'Jerry'],
     title: 'Create a Meme',
+    description: 'Create and send the other person a new dank meme',
+    cost: 2,
     checkInTime: '5:00pm',
     checkIns: {
       'April 30th': {
@@ -72,6 +76,8 @@ const fakeChallengesDatabase = {
     participants: ['3', '4'],
     participantNames: ['Nathan', 'Steven'],
     title: 'Sleep 8 hours',
+    description: 'Each person will sleep around 8 hours. Might be useful to provide sleep and wake times',
+    cost: 5,
     checkInTime: '11:00am',
     checkIns: {
       'April 30th': {
