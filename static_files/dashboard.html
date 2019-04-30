@@ -7,6 +7,37 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <script src="jquery-3.3.1.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+    // TODO pop up some modal/view to check-in
+    function createChallengeView(challenge) {
+      return `<h1>${challenge.title}</h1>` +
+        `<p>participants: ${challenge.participantNames.join(', ')}</p>` +
+        `<p>Check-in Time: <b>${challenge.checkInTime}</b></p> ` +
+        `<button>Check-In Today</button>`;
+    }
+
+
+    $(document).ready(() => {
+      // TODO Currently pretending Chris (uid:1) is logged in, will need to update current logged in user
+      $.ajax({
+          url: 'challenges/1',
+          type: 'GET',
+          dataType : 'json',
+          success: (data) => {
+            console.log('Received challenges for user 1');
+            const dataKeys = Object.keys(data);
+            dataKeys.forEach((challenge) => {
+              $('#status').append(createChallengeView(data[challenge]));
+            });
+          },
+        });
+
+      // define a generic Ajax error handler:
+      $(document).ajaxError(() => {
+        $('#status').html('Error: unknown ajaxError!');
+      });
+    }); // End of document.ready
+  </script>
 </head>
 <body>
 
@@ -28,7 +59,6 @@
       <li><a href="feed.html">Activity Feed</a></li>
       <li><a href="funds.html">Add Funds</a></li>
 </nav>
-<body>
   <h1>Welcome to Accounta-Buddy! This is the main dashboard</h1>
   <div id='status'></div>
 
