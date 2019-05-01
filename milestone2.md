@@ -22,10 +22,10 @@ Our home screen or dash has a Nav bar, which will be on all pages, that allows t
 
 ## ScreenShot 2: Create New Challenge
 Our Create a Challenge page allows the user to type in the relevant information such as the challenge name, challenge duration, and selecting their Accounta-Buddy. This is pretty much exactly the same as the layout of the UI from our first paper prototype with the same information.
-![Milestone2-1](./milestone2-images/milestone2-newchallenge.jpg)
+![Milestone2-1](./milestone2-images/milestone2-newchallenge.JPG)
 
 ## ScreenShots of the rest of the skeleton
 The rest of the pages are very barebones and are not finalized, however we are going with the structure of prototype 1 but using many of the UI elements of prototype 2. Included are screenshots of the login page and temporary pages for the funds & activity feed pages.
-![Milestone2-1](./milestone2-images/milestone2-login.jpg)
-![Milestone2-1](./milestone2-images/milestone2-funds.jpg)
-![Milestone2-1](./milestone2-images/milestone2-feed.jpg)
+![Milestone2-1](./milestone2-images/milestone2-login.JPG)
+![Milestone2-1](./milestone2-images/milestone2-funds.JPG)
+![Milestone2-1](./milestone2-images/milestone2-feed.JPG)
