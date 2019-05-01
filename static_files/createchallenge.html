@@ -9,6 +9,26 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <script src="jquery-3.3.1.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(() => {
+      $('#searchFriendsBtn').click(() => {
+        $.ajax({
+            url: 'users',
+            type: 'GET',
+            dataType : 'json',
+            success: (data) => {
+              console.log("data", data);
+              $("#users").html(data.join(", "));
+            },
+          });
+      });
+
+      // define a generic Ajax error handler:
+      $(document).ajaxError(() => {
+        $('#status').html('Error: unknown ajaxError!');
+      });
+    }); // End of document.ready
+  </script>
   </head>
 <body>
 
@@ -35,39 +55,55 @@
       </ul>
     </div>
   </nav>
-<<body class='container'>
-  <h1>Welcome to Accounta-Buddy! This is the Challenge Creation page</h1>
-  <div id='status'></div>
+<body>
 
-  <form>
-  	  <div class="form-group">
-        <label for="findMembers">Find Your Buddy</label>
-        <input type="Username" class="form-control" id="findMembers" placeholder="Search By Username">
-      </div>
-      <a class="btn btn-primary" href="dashboard.html" role="button">Search</a>
-      <div class="form-group">
-        <label for="title">Challenge Name</label>
-        <input type="title" class="form-control" id="title" placeholder="Make a title for your challenge">
-      </div>
-      <div class="form-group">
-        <label for="challengeDetails">Challenge Details</label>
-        <input type="Details" class="form-control" id="challengeDetails" placeholder="Describe the Challenge and the details of each participant's task">
-      </div>
-      <div class="form-group">
-        <label for="endDate">When does this Challenge end?</label>
-        <input type="endDate" class="form-control" id="endDate" placeholder="MM/DD/YYYY">
-      </div>
-      <div class="form-group">
-        <label for="cost">Cost of Failing</label>
-        <input type="cost" class="form-control" id="cost" placeholder="Enter Amount i.e. 1,2,5">
-      </div>
-      <div class="form-group">
-        <label for="submitTime">When should task be completed by?</label>
-        <input type="submitTime" class="form-control" id="submitTime" placeholder="i.e Every Monday at 12">
-      </div>
-
-      
-    </form>
-
+  <div class="container">
+    <h1>Welcome to Accounta-Buddy! This is the Challenge Creation page</h1>
+    <div id='status'></div>
+    <form>
+    	  <div class="form-group">
+          <label for="findMembers">Find Your Buddy</label>
+          <input type="Username" class="form-control" id="findMembers" placeholder="Search By Username">
+        </div>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchFriendsModal" id="searchFriendsBtn">
+          Search
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" id="searchFriendsModal" tabindex="-1" role="dialog" aria-labelledby="seearchFriendsModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Users in Database</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body" id="users">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="title">Challenge Name</label>
+          <input type="title" class="form-control" id="title" placeholder="Make a title for your challenge">
+        </div>
+        <div class="form-group">
+          <label for="challengeDetails">Challenge Details</label>
+          <input type="Details" class="form-control" id="challengeDetails" placeholder="Describe the Challenge and the details of each participant's task">
+        </div>
+        <div class="form-group">
+          <label for="endDate">When does this Challenge end?</label>
+          <input type="endDate" class="form-control" id="endDate" placeholder="MM/DD/YYYY">
+        </div>
+        <div class="form-group">
+          <label for="cost">Cost of Failing</label>
+          <input type="cost" class="form-control" id="cost" placeholder="Enter Amount i.e. 1,2,5">
+        </div>
+        <div class="form-group">
+          <label for="submitTime">When should task be completed by?</label>
+          <input type="submitTime" class="form-control" id="submitTime" placeholder="i.e Every Monday at 12">
+        </div>
+      </form>
+  </div>
 </body>
 </html>
