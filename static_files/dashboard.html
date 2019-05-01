@@ -1,150 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <title>Dashboard</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-  <script src="jquery-3.3.1.min.js"></script>
+  <head>
+    <title>Dashboard</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="jquery-3.3.1.min.js"></script>
+
+    <script type="text/javascript">
+      // TODO pop up some modal/view to check-in
+      // Create a standard view a challenge a user is participating in
+      // Each challenge is a part of a collapsible accordion
+      function createChallengeView(challenge, i) {
+        return `<div class="card">
+          <div class="card-header" id="heading${i}">
+            <h5 class="mb-0">
+              <button class="btn btn-link" data-toggle="collapse" data-target="#collapse${i}" aria-expanded="true" aria-controls="collapse${i}">
+                ${challenge.title}
+              </button>
+            </h5>
+          </div>
+
+          <div id="collapse${i}" class="collapse" aria-labelledby="heading${i}" data-parent="#currentChallenges">
+            <div class="card-body">
+              <p>${challenge.description}</p>
+              <p>Particpants: ${challenge.participantNames.join(", ")}</p>
+              <p>Cost: ${challenge.cost} Accounta-Bux</p>
+              <p>Check-In Time: ${challenge.checkInTime} </p>
+            </div>
+          </div>
+        </div>`;
+      }
 
 
+      $(document).ready(() => {
+        // TODO Currently pretending Chris (uid:1) is logged in, will need to update current logged in user
+        $.ajax({
+            url: 'challenges/1',
+            type: 'GET',
+            dataType : 'json',
+            success: (data) => {
+              console.log('Received challenges for user 1');
+              const dataKeys = Object.keys(data);
+              dataKeys.forEach((challenge, i) => {
+                $('#currentChallenges').append(createChallengeView(data[challenge], i));
+              });
+            },
+          });
 
-     <!--function createChallengeView(challenge) {
-      return `<h1>${challenge.title}</h1>` +
-        `<p>participants: ${challenge.participantNames.join(', ')}</p>` +
-        `<p>Check-in Time: <b>${challenge.checkInTime}</b></p> ` +
-        `<button>Check-In Today</button>`;
-    } -->
-  <script type="text/javascript">
-    // TODO pop up some modal/view to check-in
-    function createChallengeView(challenge) {
-      return `<div id="accordion">
-  <div class="card">
-    <div class="card-header" id="headingOne">
-      <h5 class="mb-0">
-        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          ${challenge.title}
-        </button>
-      </h5>
-    </div>
-    <div id="collapse" class="collapse show" aria-labelledby="heading" data-parent="#accordion">
-        <div class="card-body">
-            <div class="card" style="width: 18rem;">
-                <div class="card-body bg-primary text-white">
-                  <h5 class="card-title">${challenge.title}</h5>
-                  <h6 class="card-subtitle mb-2 text-muted"></h6>
-                  <p class="card-text">${challenge.description}, ${challenge.cost} Accountabux</p>
-                  <p> Participants: ${challenge.participantNames.join(', ')} </p>
-                  <p class="card-text">Check-in Time: ${challenge.checkInTime}</p>
-                  <a href="#" class="card-link"></a>
-                </div>
-              </div>
-        </div>
-      </div>`;
-    }
-
-
-    $(document).ready(() => {
-      // TODO Currently pretending Chris (uid:1) is logged in, will need to update current logged in user
-      $.ajax({
-          url: 'challenges/1',
-          type: 'GET',
-          dataType : 'json',
-          success: (data) => {
-            console.log('Received challenges for user 1');
-            const dataKeys = Object.keys(data);
-            dataKeys.forEach((challenge) => {
-              $('#status').append(createChallengeView(data[challenge]));
-            });
-          },
+        // define a generic Ajax error handler:
+        $(document).ajaxError(() => {
+          $('#status').html('Error: unknown ajaxError!');
         });
+      }); // End of document.ready
+    </script>
 
-      // define a generic Ajax error handler:
-      $(document).ajaxError(() => {
-        $('#status').html('Error: unknown ajaxError!');
-      });
-    }); // End of document.ready
-  </script>
-
-</head>
-<body>
-
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="dashboard.html">Accounta-Buddy</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="dashboard.html">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="createchallenge.html">Create Challenge</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="feed.html">Activity Feed</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="funds.html">Add Funds</a>
-        </li>
-      </ul>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="dashboard.html">Accounta-Buddy</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="dashboard.html">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="createchallenge.html">Create Challenge</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="feed.html">Activity Feed</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="funds.html">Add Funds</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="container">
+      <h1>Welcome to Accounta-Buddy! This is the main dashboard</h1>
+      <h2>Current Challenges:</h2>
+      <div id='currentChallenges'></div>
+      <div id="status"></div>
     </div>
-  </nav>
-  <h1>Welcome to Accounta-Buddy! This is the main dashboard</h1>
-<!--
-  <div id="accordion">
-    <div class="card">
-      <div class="card-header" id="headingOne">
-        <h5 class="mb-0">
-          <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-            Collapsible Group Item #1
-          </button>
-        </h5>
-      </div>
-  
-      <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-        <div class="card-body">
-            <div class="card" style="width: 18rem;">
-                <div class="card-body bg-warning text-white">
-                  <h5 class="card-title">{{challenge.title}}</h5>
-                  <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <a href="#" class="card-link">Card link</a>
-                  <a href="#" class="card-link">Another link</a>
-                </div>
-              </div>
-        </div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-header" id="headingTwo">
-        <h5 class="mb-0">
-          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-            Collapsible Group Item #2
-          </button>
-        </h5>
-      </div>
-      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-        <div class="card-body">
-            <div class="card" style="width: 18rem;">
-                <div class="card-body bg-success">
-                  <h5 class="card-title">Card title</h5>
-                  <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <a href="#" class="card-link">Card link</a>
-                  <a href="#" class="card-link">Another link</a>
-                </div>
-              </div>
-        </div>
-      </div>
-    </div>
-  -->
-  <div id='status'></div>
-
-</body>
+  </body>
 </html>
