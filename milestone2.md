@@ -17,13 +17,15 @@ Users would put in a set amount of money into their account to be able to play t
 
 ## ScreenShot 1: Home Screen
 Our home screen or dash has a Nav bar, which will be on all pages, that allows the user to navigate to Home, Settings, and new Challenge. For the main user interface elements we have clickable cards that display the name of the Challenge and when clicked it links to more details of the challenge. This is a similar to our UI from our second paper prototype in terms of layout and Design.  
-![Prototype1-1](./milestone1-images/prototype1-1.jpg)
+![Milestone2-1](./milestone2-images/milestone2-dash.jpg)
 
 
 ## ScreenShot 2: Create New Challenge 
-Our create a Challenge page allows the user to type in the relevant information such as the challenge name, challenge duration, and selecting their Accounta-Buddy. This is pretty much exactly the same as the layout of the UI from our first paper prototype.
-![Prototype2-1](./milestone1-images/prototype2-1.jpg)
+Our Create a Challenge page allows the user to type in the relevant information such as the challenge name, challenge duration, and selecting their Accounta-Buddy. This is pretty much exactly the same as the layout of the UI from our first paper prototype with the same information.
+![Milestone2-1](./milestone2-images/milestone2-newchallenge.jpg)
 
 ## ScreenShots of the rest of the skeleton
-The Rest of the pages are very barebones and are not finalized, however we are going with the structure of prototype 1 but using many of the UI elements of prototype 2. 
-![Prototype2-1](./milestone1-images/prototype2-1.jpg)
+The rest of the pages are very barebones and are not finalized, however we are going with the structure of prototype 1 but using many of the UI elements of prototype 2. 
+![Milestone2-1](./milestone2-images/milestone2-login.jpg)
+![Milestone2-1](./milestone2-images/milestone2-funds.jpg)
+![Milestone2-1](./milestone2-images/milestone2-feed.jpg)
