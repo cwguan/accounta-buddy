@@ -27,24 +27,24 @@ const fakeChallengesDatabase = {
       'April 30th': {
         '1': {
           description: "Hit a new PR, going up tomorrow!",
-          photo: "Some link to photo in our database for participant 1",
+          photoURL: "Some link to photo in our database for participant 1",
           location: "GPS coordinates OR NA depending on challenge"
         },
         '2': {
           description: "Legs super sore from hiking, wasn't a good leg day",
-          photo: "Some link to photo in our database for particpant 2",
+          photoURL: "Some link to photo in our database for particpant 2",
           location: "GPS coordinates OR NA depending on challenge"
         }
       },
       'May 1st': {
         '1': {
           description: "new weight felt good, going to stick with it",
-          photo: "Some link to photo in our database for participant 1",
+          photoURL: "Some link to photo in our database for participant 1",
           location: "GPS coordinates OR NA depending on challenge"
         },
         '2': {
           description: "Stretching and icing legs helped, legs feel back to normal",
-          photo: "Some link to photo in our database for particpant 2",
+          photoURL: "Some link to photo in our database for particpant 2",
           location: "GPS coordinates OR NA depending on challenge"
         }
       }
@@ -61,12 +61,12 @@ const fakeChallengesDatabase = {
       'April 30th': {
         '1': {
           description: "here's my meme",
-          photo: "Some link to photo in our database for participant 1",
+          photoURL: "Some link to photo in our database for participant 1",
           location: "GPS coordinates OR NA depending on challenge"
         },
         '2': {
           description: "such meme wow",
-          photo: "Some link to photo in our database for particpant 2",
+          photoURL: "Some link to photo in our database for particpant 2",
           location: "GPS coordinates OR NA depending on challenge"
         }
       }
@@ -83,12 +83,12 @@ const fakeChallengesDatabase = {
       'April 30th': {
         '3': {
           description: "Got 7.5 hours, feel great",
-          photo: "Some link to photo in our database for participant 3",
+          photoURL: "Some link to photo in our database for participant 3",
           location: "GPS coordinates OR NA depending on challenge"
         },
         '4': {
           description: "scaaaaary ass dream last night, don't feel nice",
-          photo: "Some link to photo in our database for particpant 4",
+          photoURL: "Some link to photo in our database for particpant 4",
           location: "GPS coordinates OR NA depending on challenge"
         }
       }
@@ -148,6 +148,11 @@ app.get('/challenges/:userid', (req, res) => {
   }
 });
 
+
+// Default redirect to the login page when page is not specified
+app.get('/', function(req, res){
+    res.sendfile('static_files/login.html');
+});
 
 // start the server at URL: http://localhost:3000/
 app.listen(3000, () => {
