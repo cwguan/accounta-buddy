@@ -25,6 +25,8 @@ User: {
  *
  * checkIns contains checkIn objects where the keys are Strings of dates
  * in the format YYYY-MM-DD.
+ * Inside each checkIn, there are keys for each of the participants to access
+ * their check-in description, photo, and location for that particular day
  */
  Challenge: {
    participants: [String],
@@ -35,12 +37,38 @@ User: {
    checkInTime: String,
    checkIns: {
      checkIn1: {
-       description: String,
-       photoURL: String,
-       location: String
+       particpant1Email: {
+         description: String,
+         photoURL: String,
+         location: String
+       },
+       particpant2Email: {
+         description: String,
+         photoURL: String,
+         location: String
+       },
+       particpantNEmail: {
+         description: String,
+         photoURL: String,
+         location: String
+       },
      },
      checkIn2: {
-
+       particpant1Email: {
+         description: String,
+         photoURL: String,
+         location: String
+       },
+       particpant2Email: {
+         description: String,
+         photoURL: String,
+         location: String
+       },
+       particpantNEmail: {
+         description: String,
+         photoURL: String,
+         location: String
+       },
      },
      checkIn3: {
 
