@@ -20,13 +20,14 @@ User: {
  *
  * participants is a list of Strings, where each string is the email of the user
  *
- * checkInTime is a String in format HH:MM in military time
+ * checkInDeadline is a String in format HH:MM in military time
  * TODO: likely make challenges daily at the same time to keep simple for now
  *
  * checkIns contains checkIn objects where the keys are Strings of dates
  * in the format YYYY-MM-DD.
  * Inside each checkIn, there are keys for each of the participants to access
- * their check-in description, photo, and location for that particular day
+ * their check-in time (also HH:MM in military time), description, photo, and
+ * location for that particular day
  */
  Challenge: {
    participants: [String],
@@ -34,20 +35,23 @@ User: {
    title: String,
    description: String,
    cost: Integer,
-   checkInTime: String,
+   checkInDeadline: String,
    checkIns: {
      checkIn1: {
        particpant1Email: {
+         checkInTime: String,
          description: String,
          photoURL: String,
          location: String
        },
        particpant2Email: {
+         checkInTime: String,
          description: String,
          photoURL: String,
          location: String
        },
        particpantNEmail: {
+         checkInTime: String,
          description: String,
          photoURL: String,
          location: String
@@ -55,16 +59,19 @@ User: {
      },
      checkIn2: {
        particpant1Email: {
+         checkInTime: String,
          description: String,
          photoURL: String,
          location: String
        },
        particpant2Email: {
+         checkInTime: String,
          description: String,
          photoURL: String,
          location: String
        },
        particpantNEmail: {
+         checkInTime: String,
          description: String,
          photoURL: String,
          location: String
