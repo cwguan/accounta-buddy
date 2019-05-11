@@ -56,7 +56,7 @@
                       name: currentUser.displayName,
                       email: currentUser.email,
                       balance: 0,
-                      challenges: [String]
+                      challenges: []
                     }, function (error) {
                       if (error) {
                         console.log(error);
@@ -68,16 +68,16 @@
                 });
               }
 
-              return true;
+              return false;
             }
           },
         'credentialHelper': firebaseui.auth.CredentialHelper.NONE,
-        signInSuccessUrl: 'dashboard.html',
+        signInFlow: 'popup',
+        // Currently can't use this because of timing with writing to database
+        // signInSuccessUrl: './dashboard.html',
         signInOptions: [
           // Leave the lines as is for the providers you want to offer your users.
-
           firebase.auth.EmailAuthProvider.PROVIDER_ID,
-
         ],
         //TODO: potential tos and privacypolicy
         // tosUrl and privacyPolicyUrl accept either url string or a callback
