@@ -35,6 +35,43 @@
      <script type="text/javascript">
       // FirebaseUI config.
       var uiConfig = {
+        callbacks: {
+            signInSuccessWithAuthResult: function(authResult, redirectUrl) {
+              // User successfully signed in.
+              // Return type determines whether we continue the redirect automatically
+              // or whether we leave that to developer to handle.
+              if (authResult && authResult.user) {
+                var currentUser = authResult.user;
+                var databaseRef = firebase.database().ref();
+
+                databaseRef.child("users/" + currentUser.uid).once("value", function(snapshot) {
+                  if (snapshot.val() !== null) {
+                    console.log("User exists");
+                    window.location.href = 'dashboard.html';
+                  } else {
+                    // Create user in database
+                    // Folders cannot be created in Storage in code, will be created by giving path when uploading
+                    databaseRef.child("users/" + currentUser.uid).set({
+                      uid: currentUser.uid,
+                      name: currentUser.displayName,
+                      email: currentUser.email,
+                      balance: 0,
+                      challenges: [String]
+                    }, function (error) {
+                      if (error) {
+                        console.log(error);
+                      } else {
+                        window.location.href = 'dashboard.html';
+                      }
+                    });
+                  }
+                });
+              }
+
+              return true;
+            }
+          },
+        'credentialHelper': firebaseui.auth.CredentialHelper.NONE,
         signInSuccessUrl: 'dashboard.html',
         signInOptions: [
           // Leave the lines as is for the providers you want to offer your users.
