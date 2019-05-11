@@ -30,6 +30,22 @@
      };
      // Initialize Firebase
      firebase.initializeApp(firebaseConfig);
+     initApp = function() {
+       firebase.auth().onAuthStateChanged(function(user) {
+         if (user) {
+           console.log("logged in");
+         } else {
+           // User is signed out, display correct content
+           console.log("not logged in");
+           window.location = '/login.html';
+         }
+       }, function(error) {
+         console.log(error);
+       });
+     };
+     window.addEventListener('load', function() {
+       initApp();
+     });
      </script>
 
   </head>

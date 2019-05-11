@@ -30,16 +30,24 @@
      };
      // Initialize Firebase
      firebase.initializeApp(firebaseConfig);
-     </script>
-     <!--
-     <script type="text/javascript">
-     // jQuery convention for running when the document has been fully loaded
-     $(document).ready(()=> {
-       const database = firebase.database();
-       database.ref('users/').remove();
-       database.ref('users/Jerry').set({name: 'jerry', email: 'j4shu@ucsd.edu'});
+     initApp = function() {
+       firebase.auth().onAuthStateChanged(function(user) {
+         if (user) {
+           console.log("logged in");
+         } else {
+           // User is signed out, display correct content
+           console.log("not logged in");
+           window.location = '/login.html';
+         }
+       }, function(error) {
+         console.log(error);
+       });
+     };
+     window.addEventListener('load', function() {
+       initApp();
      });
-   </script> -->
+
+     </script>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
