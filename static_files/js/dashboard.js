@@ -62,7 +62,7 @@ function getLocation() {
 
 
 function goToChallengeDetails(challengeUID) {
-  window.location.href = 'challenges/' + challengeUID;
+  window.location.href = 'challenges.html?challenge=' + challengeUID;
 }
 
 
