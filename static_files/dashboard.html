@@ -34,6 +34,7 @@
        firebase.auth().onAuthStateChanged(function(user) {
          if (user) {
            console.log("logged in");
+           displayChallenges();
          } else {
            // User is signed out, display correct content
            console.log("not logged in");
@@ -55,7 +56,7 @@
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-      
+
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav mr-auto">
                   <!--pushes the rest of the navbar links to the right-->
@@ -93,9 +94,68 @@
           </div>
         </nav>
     <div class="content container">
-      <h1>Welcome to Accounta-Buddy! This is the main dashboard</h1>
-      <h2>Current Challenges:</h2>
-      <div id='currentChallenges'></div>
+      <h1 class="display-1">Dashboard</h1>
+
+      <div class="row">
+        <div class="col">
+          <h2>Current Challenges:</h2>
+          <div id='currentChallenges'></div>
+        </div>
+        <div class="col-2"></div>
+        <div class="col">
+            <h2>Activity Feed</h2>
+            <ul class="list-group">
+              <li class="list-group-item list-group-item-info">Jerry Shu checked in for <b>Create a Meme</b> on 2019-05-11</li>
+              <li class="list-group-item list-group-item-success">You checked in for <b>Create a Meme</b> on 2019-05-11</li>
+              <li class="list-group-item list-group-item-success">You checked in for <b>Create a Meme</b> on 2019-05-10</li>
+              <li class="list-group-item list-group-item-info">Jerry Shu checked in for <b>Create a Meme</b> on 2019-05-10</li>
+              <li class="list-group-item list-group-item-warning">Jerry Shu missed a check-in for <b>Create a Meme</b> on 2019-05-09</li>
+              <li class="list-group-item list-group-item-danger">You missed a check-in for <b>Create a Meme</b> on 2019-05-09</li>
+            </ul>
+        </div>
+      </div>
+
+      <!-- Check-In Modal -->
+      <div class="modal fade" id="checkInModal" tabindex="-1" role="dialog" aria-labelledby="checkInModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Check-In</h5>
+            </div>
+
+            <div class="modal-body">
+              <form>
+                <div class="form-group">
+                  <label for="description">Description</label>
+                  <textarea class="form-control" id="description" rows="3"></textarea>
+                  <small id="descriptionHelp" class="form-text text-muted">Describe what you did/accomplished for this challenge.</small>
+                </div>
+                <div class="form-group">
+                  <label for="uploadPhoto">Upload a Photo</label>
+                  <input type="file" class="form-control-file" id="uploadPhoto">
+                </div>
+                <div class="form-group">
+                  <label for="includeLocation">Include a Location (Might take a few seconds to retrieve)</label><br />
+                  <button type="button" class="btn btn-primary" onclick="getLocation();">Get Location</button>
+                  <div class="row">
+                    <div class="col">
+                      Latitude: <input type="text" readonly class="form-control-plaintext" id="latitude" value="">
+                    </div>
+                    <div class="col">
+                      Longitude: <input type="text" readonly class="form-control-plaintext" id="longitude" value="">
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Submit Check-In</button>
+            </div>
+          </div>
+        </div>
+      </div>
       <div id="status"></div>
     </div>
   </body>
