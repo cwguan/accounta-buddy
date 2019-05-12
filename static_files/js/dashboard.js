@@ -14,29 +14,72 @@ function createChallengeView(challenge, i) {
     <div id="collapse${i}" class="collapse" aria-labelledby="heading${i}" data-parent="#currentChallenges">
       <div class="card-body">
         <p>${challenge.description}</p>
-        <p>Particpants: ${challenge.participantNames.join(", ")}</p>
-        <p>Cost: ${challenge.cost} Accounta-Bux</p>
-        <p>Check-In Time: ${challenge.checkInTime} </p>
+        <p><b>Particpants:</b> ${challenge.participantNames.join(", ")}</p>
+        <p><b>Cost:</b> ${challenge.cost} Accounta-Bux</p>
+        <p><b>Check-In Time:</b> ${challenge.checkInDeadline} </p>
+        <p>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#checkInModal">Check-In</button>
+          <button type="button" class="btn btn-secondary" onclick="goToChallengeDetails('${challenge.uid}');">Challenge Details</button>
+        </p>
       </div>
     </div>
   </div>`;
 }
 
 
-$(document).ready(() => {
-  // TODO Currently pretending Chris (uid:1) is logged in, will need to update current logged in user
-  $.ajax({
-      url: 'challenges/1',
-      type: 'GET',
-      dataType : 'json',
-      success: (data) => {
-        console.log('Received challenges for user 1');
-        const dataKeys = Object.keys(data);
-        dataKeys.forEach((challenge, i) => {
-          $('#currentChallenges').append(createChallengeView(data[challenge], i));
-        });
-      },
+function displayChallenges() {
+  let currentUser = firebase.auth().currentUser;
+  let database = firebase.database();
+
+  // Get currentUser's info from the database
+  database.ref('users/' + currentUser.uid).once('value').then(function(snapshot) {
+    let challenges = snapshot.val().challenges;
+
+    // Retrieve each challenge from the database and append it to the challenge view
+    challenges.forEach((challenge, i) => {
+      database.ref('challenges/' + challenge).once('value').then(function(snapshot) {
+        $('#currentChallenges').append(createChallengeView(snapshot.val(), i));
+      });
     });
+  });
+
+}
+
+
+function showPosition(position) {
+  $('#latitude').attr('value', position.coords.latitude)
+  $('#longitude').attr('value', position.coords.longitude)
+}
+
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else {
+    console.log("Geolocation is not supported by this browser.");
+  }
+}
+
+
+function goToChallengeDetails(challengeUID) {
+  window.location.href = 'challenges/' + challengeUID;
+}
+
+
+$(document).ready(() => {
+  // // TODO Currently pretending Chris (uid:1) is logged in, will need to update current logged in user
+  // $.ajax({
+  //     url: 'challenges/1',
+  //     type: 'GET',
+  //     dataType : 'json',
+  //     success: (data) => {
+  //       console.log('Received challenges for user 1');
+  //       const dataKeys = Object.keys(data);
+  //       dataKeys.forEach((challenge, i) => {
+  //         $('#currentChallenges').append(createChallengeView(data[challenge], i));
+  //       });
+  //     },
+  //   });
 
   // define a generic Ajax error handler:
   $(document).ajaxError(() => {
