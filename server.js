@@ -131,21 +131,10 @@ app.get('/challenges', (req, res) => {
 });
 
 
-// Gets all of the challenges a user participates in and each challenges' info
-app.get('/challenges/:userid', (req, res) => {
-  const userToLookup = req.params.userid;
-  const user = fakeUsersDatabase[userToLookup];
-  if (user) {
-    const challengesInfo = {};
-    user.challenges.forEach((challenge) => {
-      challengesInfo[challenge] = fakeChallengesDatabase[challenge];
-    });
-    console.log(challengesInfo);
-    res.send(challengesInfo);
-  } else {
-    console.log("User with uid", userToLookup, "not found");
-    res.send({});
-  }
+// Goes to a challenge details page that lists out all info
+app.get('/challenges/:challengeUID', (req, res) => {
+  console.log('Here');
+  // TODO TODO TODO: ALL YOURS JERRY
 });
 
 
