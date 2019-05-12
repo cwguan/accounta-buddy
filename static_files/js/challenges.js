@@ -25,8 +25,9 @@ function displayAllCheckins() {
 
     // Retrieve each challenge from the database and append it to the challenge view
     challenges.forEach((challenge) => {
-      database.ref('challenges/' + 'checkIns').once('value').then(function(snapshot) {
-        $('#currentChallenges').append(getCheckins(snapshot.val()));
+      database.ref('challenges/' + challengeUID + '/checkIns').once('value').then(function(snapshot) {
+        console.log(snapshot.val());
+        $('#challengeInfo').append(getCheckins(snapshot.val()));
       });
     });
   });
