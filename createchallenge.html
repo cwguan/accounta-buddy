@@ -9,61 +9,193 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <script src="jquery-3.3.1.min.js"></script>
+  <script src="./js/createchallenge.js"></script>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-database.js"></script>
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+   https://firebase.google.com/docs/web/setup#config-web-app -->
+
+   <script>
+   // Your web app's Firebase configuration
+   var firebaseConfig = {
+     apiKey: "AIzaSyCKRKysCmOlJF8oSWqoPeTuNnRsuEj1H6Y",
+     authDomain: "accounta-buddy-eeecf.firebaseapp.com",
+     databaseURL: "https://accounta-buddy-eeecf.firebaseio.com",
+     projectId: "accounta-buddy-eeecf",
+     storageBucket: "accounta-buddy-eeecf.appspot.com",
+     messagingSenderId: "207844433217",
+     appId: "1:207844433217:web:c60846fdf9f5039e"
+   };
+   // Initialize Firebase
+   firebase.initializeApp(firebaseConfig);
+   initApp = function() {
+     firebase.auth().onAuthStateChanged(function(user) {
+       if (user) {
+         console.log("logged in");
+       } else {
+         // User is signed out, display correct content
+         console.log("not logged in");
+         window.location = '/login.html';
+       }
+     }, function(error) {
+       console.log(error);
+     });
+   };
+   window.addEventListener('load', function() {
+     initApp();
+   });
+   </script>
+
   </head>
 <body>
-
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="dashboard.html">Accounta-Buddy</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="dashboard.html">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" href="createchallenge.html">Create Challenge</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="feed.html">Activity Feed</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="funds.html">Add Funds</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="dashboard.html">Accounta-Buddy</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <!--pushes the rest of the navbar links to the right-->
+              </ul>
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="dashboard.html">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="createchallenge.html">Create Challenge</a>
+              <!--REMOVE FROM NAVBAR ONCE DASHBOARD IS IMPLEMENTED-->
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="feed.html">Activity Feed</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Account
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="settings.html">Settings</a>
+                  <a class="dropdown-item" href="funds.html">Add Funds</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#" onclick='return logout()'>Log out</a>
+                  <script> function logout(){
+                    firebase.auth().signOut()
+                  }
+                  </script>
+                </div>
+              </li>
+            <!-- <li class="nav-item">
+                <a class="nav-link" href="funds.html">Add Funds</a>
+              </li> -->
+          </ul>
+        </div>
+      </nav>
 <body>
-  <h1>Welcome to Accounta-Buddy! This is the Challenge Creation page</h1>
-  <div id='status'></div>
 
-  <form>
-  	  <div class="form-group">
-        <label for="findMembers">Find Your Buddy</label>
-        <input type="Username" class="form-control" id="findMembers" placeholder="Search By Username">
-      </div>
-      <a class="btn btn-primary" href="dashboard.html" role="button">Search</a>
-      <div class="form-group">
-        <label for="title">Challenge Name</label>
-        <input type="title" class="form-control" id="title" placeholder="Make a title for your challenge">
-      </div>
-      <div class="form-group">
-        <label for="challengeDetails">Challenge Details</label>
-        <input type="Details" class="form-control" id="challengeDetails" placeholder="Describe the Challenge and the details of each participant's task">
-      </div>
-      <div class="form-group">
-        <label for="endDate">When does this Challenge end?</label>
-        <input type="endDate" class="form-control" id="endDate" placeholder="MM/DD/YYYY">
-      </div>
-      <div class="form-group">
-        <label for="cost">Cost of Failing</label>
-        <input type="cost" class="form-control" id="cost" placeholder="Enter Amount i.e. 1,2,5">
-      </div>
+  <div class="content container">
+    <h1>Welcome to Accounta-Buddy! This is the Challenge Creation page</h1>
+    <div id='status'></div>
+    <form>
+        <div class="form-group">
+          <label for="findMembers">Find Your Buddy</label>
+          <input type="Username" class="form-control" id="findMembers" placeholder="Search By Username">
+        </div>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchFriendsModal" id="searchFriendsBtn">
+          Search
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" id="searchFriendsModal" tabindex="-1" role="dialog" aria-labelledby="seearchFriendsModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Users in Database</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body" id="users">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="title">Challenge Name</label>
+          <input type="title" class="form-control" id="title" placeholder="Make a title for your challenge">
+        </div>
+        <div class="form-group">
+          <label for="challengeDetails">Challenge Details</label>
+          <textarea type="Details" class="form-control" id="challengeDetails" rows = "3" placeholder="Describe the Challenge and the details of each participant's task"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="cost">Cost of Failing</label>
+          <input type="cost" class="form-control" id="cost" placeholder="Enter Amount i.e. 1,2,5">
+        </div>
+        <div class="form-group">
+          <label class="mr-sm-2" for="inlineFormCustomSelect">Complete Task...</label>
+          <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+            <option selected>Choose...</option>
+            <option value="1">Daily</option>
+            <option value="2">Weekly</option>
+            <option value="3">None</option>
+          </select>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="saturday" value="option1">
+          <label class="form-check-label" for="saturday">S</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="monday" value="option2">
+          <label class="form-check-label" for="monday">M</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="tuesday" value="option3">
+          <label class="form-check-label" for="tuesday">T</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="wednesday" value="option4">
+          <label class="form-check-label" for="wednesday">W</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="thursday" value="option1">
+          <label class="form-check-label" for="thursday">T</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="friday" value="option2">
+          <label class="form-check-label" for="friday">F</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="sunday" value="option3">
+          <label class="form-check-label" for="sunday">S</label>
+        </div>
+        <div class="form-group">
+          <label for="endDate">When does the challenge end?</label>
+          <input type="endDate" class="form-control" id="endDate" placeholder="MM/DD/YYYY">
+        </div>
 
-      
-    </form>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#successfulCreation">
+          Create Challenge
+        </button>
 
+        <!-- Modal -->
+        <div class="modal fade" id="successfulCreation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Challenge Created</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                Your challenge has been created! Congratulations!
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+  </div>
 </body>
 </html>
