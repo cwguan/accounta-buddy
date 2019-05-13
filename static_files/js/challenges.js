@@ -43,7 +43,7 @@ function getCheckins(checkins) {
           <p><b>description:</b> ${checkins[key][userKey].description}</p>
           <p><b>location:</b> ${checkins[key][userKey].location.latitude}, ${checkins[key][userKey].location.longitude}</p>
           <p><b>participant:</b> ${checkins[key][userKey].participantName}</p>
-          <img src=${checkins[key][userKey].photoURL}`);
+          <img src="${checkins[key][userKey].photoURL}" />`);
     });
 
   });

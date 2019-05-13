@@ -34,6 +34,7 @@
      firebase.auth().onAuthStateChanged(function(user) {
        if (user) {
          console.log("logged in");
+         preparePage();
        } else {
          // User is signed out, display correct content
          console.log("not logged in");
@@ -98,7 +99,7 @@
     <form>
         <div class="form-group">
           <label for="findMembers">Find Your Buddy</label>
-          <input type="Username" class="form-control" id="findMembers" placeholder="Search By Username">
+          <input type="Username" class="form-control" id="findMembers" placeholder="Search By Email">
         </div>
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchFriendsModal" id="searchFriendsBtn">
           Search
@@ -129,6 +130,10 @@
         <div class="form-group">
           <label for="cost">Cost of Failing</label>
           <input type="cost" class="form-control" id="cost" placeholder="Enter Amount i.e. 1,2,5">
+        </div>
+        <div class="form-group">
+          <label for="cost">Check-In Deadline</label>
+          <input type="cost" class="form-control" id="checkInDeadline" placeholder="HH:MM">
         </div>
         <div class="form-group">
           <label class="mr-sm-2" for="inlineFormCustomSelect">Complete Task...</label>
@@ -173,7 +178,7 @@
         </div>
 
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#successfulCreation">
+        <button type="button" class="btn btn-primary btn-block" onclick="onCreateChallenge();" data-toggle="modal" data-target="#successfulCreation">
           Create Challenge
         </button>
 
