@@ -80,7 +80,7 @@
                     <a class="dropdown-item" href="settings.html">Settings</a>
                     <a class="dropdown-item" href="funds.html">Add Funds</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#" onclick='return logout()'>Log out</a>
+                    <a class="dropdown-item" href="#" onclick='return logout();'>Log out</a>
                     <script> function logout(){
                       firebase.auth().signOut()
                     }
@@ -97,6 +97,20 @@
     <div class="content container">
       <h1>Welcome to Accounta-Buddy! This is the page where you add funds</h1>
       <div id='status'></div>
+
+      <button type="button" class="btn btn-success btn-lg" onclick='return addBux();'>Add 5 Accountabux</button>
+      <h3> Current Balance: </h3>
+      <script> function addBux(){
+        var user = firebase.auth().currentUser;
+        user.updateProfile({
+          balance = balance + 5,
+        })
+        if (user != null){
+          user.balance = user.balance + 5;
+        }
+
+      }
+      </script>      
     </div>
   </body>
 </html>
