@@ -14,7 +14,7 @@ function createChallengeView(challenge, i) {
     <div id="collapse${i}" class="collapse" aria-labelledby="heading${i}" data-parent="#currentChallenges">
       <div class="card-body">
         <p>${challenge.description}</p>
-        <p><b>Particpants:</b> ${challenge.participantNames.join(", ")}</p>
+        <p><b>Participants:</b> ${challenge.participantNames.join(", ")}</p>
         <p><b>Cost:</b> ${challenge.cost} Accounta-Bux</p>
         <p><b>Check-In Time:</b> ${challenge.checkInDeadline} </p>
         <p>

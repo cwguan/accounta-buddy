@@ -21,24 +21,34 @@ function displayAllCheckins() {
   // Get currentUser's info from the database
   database.ref('users/' + currentUser.uid).once('value').then(function(snapshot) {
     let challenges = snapshot.val().challenges;
-    console.log(challenges);
 
     // Retrieve each challenge from the database and append it to the challenge view
     challenges.forEach((challenge) => {
       database.ref('challenges/' + challengeUID + '/checkIns').once('value').then(function(snapshot) {
-        console.log(snapshot.val());
-        $('#challengeInfo').append(getCheckins(snapshot.val()));
+        getCheckins(snapshot.val());
       });
     });
   });
 }
 
 function getCheckins(checkins) {
-  return `<p><b>${checkins.checkInTime}</b></p>
-      <p><b>description:</b> ${checkins.description}</p>
-      <p><b>location:</b> ${checkins.location}</p>
-      <p><b>participant:</b> ${checkins.particpantName}</p>
-      <img src=${checkins.photoURL}`;
+  var info = ``;
+  var keys = Object.keys(checkins);
+  keys.forEach(function(key) {
+    $('#challengeInfo').append(`<p><b>Date:</b> ${key}<p>`);
+    userKeys = Object.keys(checkins[key]);
+    //need to change location in below block with whatever location API thing we have
+    userKeys.forEach(function(userKey) {
+      $('#challengeInfo').append(`<p><b>Time:</b> ${checkins[key][userKey].checkInTime}</p>
+          <p><b>description:</b> ${checkins[key][userKey].description}</p>
+          <p><b>location:</b> ${checkins[key][userKey].location.latitude}, ${checkins[key][userKey].location.longitude}</p>
+          <p><b>participant:</b> ${checkins[key][userKey].participantName}</p>
+          <img src=${checkins[key][userKey].photoURL}`);
+    });
+
+  });
+  console.log(info);
+  return info;
 }
 
 function displayChallengeDetails() {
