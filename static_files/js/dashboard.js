@@ -1,4 +1,34 @@
-// TODO pop up some modal/view to check-in
+// Object mapping to be able to set the right file name in Storage
+var mimeTypeToExtension = {
+  "image/gif": "gif",
+  "image/jpeg": "jpg",
+  "image/png": "png",
+  "image/tiff": "tiff",
+  "image/vnd.wap.wbmp": "wbmp",
+  "image/x-icon": "ico",
+  "image/x-jng": "jng",
+  "image/x-ms-bmp": "bmp",
+  "image/svg+xml": "svg",
+  "image/webp": "webp"
+};
+
+let currentImage = {};
+
+
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+        };
+
+        reader.readAsDataURL(input.files[0]);
+        // Saves Blob, not the data, & the extension
+        currentImage.file = input.files[0]
+        currentImage.extension = mimeTypeToExtension[currentImage.file.type];
+    }
+}
+
 // Create a standard view a challenge a user is participating in
 // Each challenge is a part of a collapsible accordion
 function createChallengeView(challenge, i) {
@@ -18,7 +48,7 @@ function createChallengeView(challenge, i) {
         <p><b>Cost:</b> ${challenge.cost} Accounta-Bux</p>
         <p><b>Check-In Time:</b> ${challenge.checkInDeadline} </p>
         <p>
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#checkInModal">Check-In</button>
+          <button type="button" class="btn btn-primary" onclick="setCheckInChallenge('${challenge.uid}');" data-toggle="modal" data-target="#checkInModal">Check-In</button>
           <button type="button" class="btn btn-secondary" onclick="goToChallengeDetails('${challenge.uid}');">Challenge Details</button>
         </p>
       </div>
@@ -58,6 +88,90 @@ function getLocation() {
   } else {
     console.log("Geolocation is not supported by this browser.");
   }
+}
+
+
+// Set the onclick of the submit check-in button to be with the right chalelnge uid
+function setCheckInChallenge(challengeUID) {
+  $('#submitCheckInBtn').attr('onclick', `submitCheckIn('${challengeUID}');`);
+}
+
+
+// Submit the check-in for the currentUser and displayed challenge
+// TODO: validate form input, check for empty, etc.
+function submitCheckIn(challengeUID) {
+  let currentUser = firebase.auth().currentUser;
+  let database = firebase.database();
+  var storageRef = firebase.storage().ref();
+
+  // Get form input
+  let description = $('#description').val();
+  let location = {
+    'latitude': $('#latitude').val(),
+    'longitude': $('#longitude').val()
+  };
+
+  // Extract only the YYYY-MM-DD from Date object
+  let date = new Date().toISOString();
+  date = date.substring(0, 10);
+
+  var uploadTask = storageRef.child(`${challengeUID}/${date}/${currentUser.uid}.${currentImage.extension}`).put(currentImage.file);
+  uploadTask.on('state_changed', function(snapshot) {
+    // Observe state change events such as progress, pause, and resume
+    // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+    var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    console.log('Upload is ' + progress + '% done');
+    switch (snapshot.state) {
+      case firebase.storage.TaskState.PAUSED: // or 'paused'
+        console.log('Upload is paused');
+        break;
+      case firebase.storage.TaskState.RUNNING: // or 'running'
+        console.log('Upload is running');
+        break;
+    }
+
+  }, function(error) {
+    // Handle unsuccessful uploads
+    console.log(error);
+
+  }, function() {
+    // Handle successful uploads on complete
+    uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+      // Once image has been uploaded to Storage, create entry in Realtime Database
+
+      let update = {
+        participantName: currentUser.displayName,
+        checkInTime: getCurrentTime(),
+        description: description,
+        photoURL: downloadURL,
+        location: location,
+      };
+
+      database.ref('challenges/' + challengeUID + '/checkIns/' + date + '/' + currentUser.uid).update(update);
+
+    });
+  }); // End of Storage uploadTask state_changed handling
+}
+
+
+// Gets time in HH:DD in correct format for database
+function getCurrentTime() {
+  let currentTime = new Date();
+  let checkInTime = "";
+  if (currentTime.getHours() < 10) {
+    console.log(currentTime.getHours())
+    checkInTime = "0" + currentTime.getHours() + ":";
+  } else {
+    checkInTime = currentTime.getHours() + ":";
+  }
+
+  if (currentTime.getMinutes() < 10) {
+    checkInTime = checkInTime + "0" + currentTime.getMinutes();
+  } else {
+     checkInTime = checkInTime + currentTime.getMinutes();
+  }
+
+  return checkInTime;
 }
 
 

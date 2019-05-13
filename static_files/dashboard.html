@@ -14,6 +14,7 @@
     <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-storage.js"></script>
     <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#config-web-app -->
 
@@ -132,7 +133,7 @@
                 </div>
                 <div class="form-group">
                   <label for="uploadPhoto">Upload a Photo</label>
-                  <input type="file" class="form-control-file" id="uploadPhoto">
+                  <input type="file" accept="image/*" onchange="readURL(this);" class="form-control-file" id="uploadPhoto">
                 </div>
                 <div class="form-group">
                   <label for="includeLocation">Include a Location (Might take a few seconds to retrieve)</label><br />
@@ -151,7 +152,7 @@
 
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Submit Check-In</button>
+              <button type="button" class="btn btn-primary" id="submitCheckInBtn">Submit Check-In</button>
             </div>
           </div>
         </div>
