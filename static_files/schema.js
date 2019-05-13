@@ -29,7 +29,7 @@ User: {
  * location for that particular day
  */
  Challenge: {
-   uid: String, 
+   uid: String,
    participants: [String],
    participantNames: [String],
    title: String,
@@ -38,49 +38,67 @@ User: {
    checkInDeadline: String,
    checkIns: {
      checkIn1: {
-       particpant1Email: {
+       particpant1UID: {
          participantName: String,
          checkInTime: String,
          description: String,
          photoURL: String,
-         location: String
+         location: {
+           latitude: String,
+           longitude: String
+         }
        },
-       particpant2Email: {
+       particpant2UID: {
          participantName: String,
          checkInTime: String,
          description: String,
          photoURL: String,
-         location: String
+         location: {
+           latitude: String,
+           longitude: String
+         }
        },
-       particpantNEmail: {
+       particpantNUID: {
          participantName: String,
          checkInTime: String,
          description: String,
          photoURL: String,
-         location: String
+         location: {
+           latitude: String,
+           longitude: String
+         }
        },
      },
      checkIn2: {
-       particpant1Email: {
+       particpant1UID: {
          participantName: String,
          checkInTime: String,
          description: String,
          photoURL: String,
-         location: String
+         location: {
+           latitude: String,
+           longitude: String
+         }
        },
-       particpant2Email: {
+       particpant2UID: {
          participantName: String,
          checkInTime: String,
          description: String,
          photoURL: String,
-         location: String
+         location: {
+           latitude: String,
+           longitude: String
+         }
        },
-       particpantNEmail: {
+       particpantNUID: {
          participantName: String,
          checkInTime: String,
          description: String,
          photoURL: String,
-         location: String
+         location: {
+           latitude: String,
+           longitude: String
+         }
        },
      },
      checkIn3: {
