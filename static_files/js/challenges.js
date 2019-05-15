@@ -3,16 +3,17 @@
 // Each challenge is a part of a collapsible accordion
 function createChallengeView(challenge, i) {
   return `<div class="column">
-      <h2><b>${challenge.title}</b></h2>
+      <h2><b><font color='#7A7A7A'>${challenge.title}</font></b></h2>
       <p>${challenge.description}</p>
       <p><b>Participants:</b> ${challenge.participantNames.join(", ")}</p>
-      <p>Check in every day by ${challenge.checkInDeadline}</p>
-      <p>Don't forget, or you owe them ${challenge.cost} Accounta-bux!</p>
-      <button type="button" class="btn btn-outline-dark"  onclick="displayAllCheckins(); this.style.display = 'none'">See All Checkins</button>
+      <p>Check in every day by <b>${challenge.checkInDeadline}</b></p>
+      <p>Don't forget, or you owe them <b>${challenge.cost}</b> Accounta-bux!</p>
   </div>`;
 }
 
-function displayAllCheckins() {
+
+//depreciated code for checkins button
+/*function displayAllCheckins() {
   let currentUser = firebase.auth().currentUser;
   let database = firebase.database();
   var href = window.location.href;
@@ -48,7 +49,7 @@ function getCheckins(checkins) {
   });
   console.log(info);
   return info;
-}
+}*/
 
 function createCheckIns(currentUser, checkins) {
 
@@ -61,23 +62,23 @@ function createCheckIns(currentUser, checkins) {
       if (currentUser == userKey) {
 
         if (checkInDateObjects[checkInKey][userKey]) {
-          $('#checkinFeed').append(`<li class="list-group-item list-group-item-success"><p>You checked in for ${checkins.title} on ${checkInKey}</p>
+          $('#checkinFeed').append(`<li class="list-group-item list-group-item-success"><p><b>You</b> checked in for ${checkins.title} on <b>${checkInKey}</b></p>
           <p><b>description:</b> ${checkInDateObjects[checkInKey][userKey].description}</p>
           <p><b>location:</b> ${checkInDateObjects[checkInKey][userKey].location.latitude}, ${checkInDateObjects[checkInKey][userKey].location.longitude}</p>
           <p><b>participant:</b> ${checkInDateObjects[checkInKey][userKey].participantName}</p>
           <img src="${checkInDateObjects[checkInKey][userKey].photoURL}" /></li>`);
         } else {
-          $('#checkinFeed').append(`<li class="list-group-item list-group-item-danger">You missed a check-in for ${checkins.title} on ${checkInKey}</li>`);
+          $('#checkinFeed').append(`<li class="list-group-item list-group-item-danger"><b>You</b> missed a check-in for ${checkins.title} on <b>${checkInKey}</b></li>`);
         }
       } else {
         if (checkInDateObjects[checkInKey][userKey]) {
-          $('#checkinFeed').append(`<li class="list-group-item list-group-item-info"><p>${checkInDateObjects[checkInKey][userKey].participantName} checked in for ${checkins.title} on ${checkInKey}</p>
+          $('#checkinFeed').append(`<li class="list-group-item list-group-item-info"><p><b>${checkInDateObjects[checkInKey][userKey].participantName}</b> checked in for ${checkins.title} on <b>${checkInKey}</b></p>
           <p><b>description:</b> ${checkInDateObjects[checkInKey][userKey].description}</p>
           <p><b>location:</b> ${checkInDateObjects[checkInKey][userKey].location.latitude}, ${checkInDateObjects[checkInKey][userKey].location.longitude}</p>
           <p><b>participant:</b> ${checkInDateObjects[checkInKey][userKey].participantName}</p>
           <img src="${checkInDateObjects[checkInKey][userKey].photoURL}" /></li>`);
         } else {
-          $('#checkinFeed').append(`<li class="list-group-item list-group-item-warning">${checkInDateObjects[checkInKey][userKey].participantName} missed a check-in for ${checkins.title} on ${checkInKey}</li>`);
+          $('#checkinFeed').append(`<li class="list-group-item list-group-item-warning"><b>${checkInDateObjects[checkInKey][userKey].participantName}</b> missed a check-in for ${checkins.title} on <b>${checkInKey}</b></li>`);
         }
       }
 
