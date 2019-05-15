@@ -32,7 +32,6 @@ function displayAllCheckins() {
 }
 
 function getCheckins(checkins) {
-  var info = ``;
   var keys = Object.keys(checkins);
   keys.forEach(function(key) {
     $('#challengeInfo').append(`<p><b>Date:</b> ${key}<p>`);
@@ -51,8 +50,47 @@ function getCheckins(checkins) {
   return info;
 }
 
+function createCheckIns(currentUser, checkins) {
+
+  checkInDateObjects = checkins.checkIns;
+  checkInKeys = Object.keys(checkInDateObjects);
+  userKeys = Object.values(checkins.participants);
+  checkInKeys.forEach(function(checkInKey) {
+    $('#checkinFeed').append(`<li class="list-group-item"><b>${checkInKey}</b></li>`);
+    userKeys.forEach(function(userKey) {
+      if (currentUser == userKey) {
+
+        if (checkInDateObjects[checkInKey][userKey]) {
+          $('#checkinFeed').append(`<li class="list-group-item list-group-item-success"><p>You checked in for ${checkins.title} on ${checkInKey}</p>
+          <p><b>description:</b> ${checkInDateObjects[checkInKey][userKey].description}</p>
+          <p><b>location:</b> ${checkInDateObjects[checkInKey][userKey].location.latitude}, ${checkInDateObjects[checkInKey][userKey].location.longitude}</p>
+          <p><b>participant:</b> ${checkInDateObjects[checkInKey][userKey].participantName}</p>
+          <img src="${checkInDateObjects[checkInKey][userKey].photoURL}" /></li>`);
+        } else {
+          $('#checkinFeed').append(`<li class="list-group-item list-group-item-danger">You missed a check-in for ${checkins.title} on ${checkInKey}</li>`);
+        }
+      } else {
+        if (checkInDateObjects[checkInKey][userKey]) {
+          $('#checkinFeed').append(`<li class="list-group-item list-group-item-info"><p>${checkInDateObjects[checkInKey][userKey].participantName} checked in for ${checkins.title} on ${checkInKey}</p>
+          <p><b>description:</b> ${checkInDateObjects[checkInKey][userKey].description}</p>
+          <p><b>location:</b> ${checkInDateObjects[checkInKey][userKey].location.latitude}, ${checkInDateObjects[checkInKey][userKey].location.longitude}</p>
+          <p><b>participant:</b> ${checkInDateObjects[checkInKey][userKey].participantName}</p>
+          <img src="${checkInDateObjects[checkInKey][userKey].photoURL}" /></li>`);
+        } else {
+          $('#checkinFeed').append(`<li class="list-group-item list-group-item-warning">${checkInDateObjects[checkInKey][userKey].participantName} missed a check-in for ${checkins.title} on ${checkInKey}</li>`);
+        }
+      }
+
+
+    });
+  });
+
+
+}
+
 function displayChallengeDetails() {
   let currentUser = firebase.auth().currentUser;
+  let currentUID = currentUser.uid;
   let database = firebase.database();
   var href = window.location.href;
   var challengeUID = href.split('?challenge=')[1];
@@ -60,8 +98,10 @@ function displayChallengeDetails() {
   // Get currentUser's info from the database
   database.ref('users/' + currentUser.uid).once('value').then(function(snapshot) {
     let challenges = snapshot.val().challenges;
+
     database.ref('challenges/' + challengeUID).once('value').then(function(snapshot) {
       $('#challengeInfo').append(createChallengeView(snapshot.val()));
+      createCheckIns(currentUID, snapshot.val());
     });
   });
 
