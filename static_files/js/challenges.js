@@ -58,9 +58,8 @@ function createCheckIns(currentUser, checkins) {
   userKeys = Object.values(checkins.participants);
   checkInKeys.forEach(function(checkInKey) {
     $('#checkinFeed').append(`<li class="list-group-item"><b>${checkInKey}</b></li>`);
-    userKeys.forEach(function(userKey) {
+    userKeys.forEach(function(userKey, i) {
       if (currentUser == userKey) {
-
         if (checkInDateObjects[checkInKey][userKey]) {
           $('#checkinFeed').append(`<li class="list-group-item list-group-item-success"><p><b>You</b> checked in for <b>${checkins.title}</b> on ${checkInKey}</p>
           <p><b>description:</b> ${checkInDateObjects[checkInKey][userKey].description}</p>
@@ -78,7 +77,7 @@ function createCheckIns(currentUser, checkins) {
           <p><b>participant:</b> ${checkInDateObjects[checkInKey][userKey].participantName}</p>
           <img src="${checkInDateObjects[checkInKey][userKey].photoURL}" /></li>`);
         } else {
-          $('#checkinFeed').append(`<li class="list-group-item list-group-item-warning"><b>${checkInDateObjects[checkInKey][userKey].participantName}</b> missed a check-in for <b>${checkins.title}</b> on ${checkInKey}</li>`);
+          $('#checkinFeed').append(`<li class="list-group-item list-group-item-warning"><b>${checkins.participantNames[i]}</b> missed a check-in for <b>${checkins.title}</b> on ${checkInKey}</li>`);
         }
       }
 
