@@ -50,6 +50,13 @@ function getCheckins(checkins) {
   console.log(info);
   return info;
 }*/
+function checkURL(url) {
+  if (url == 'someURL') {
+    $('#checkinFeed').append(`<p>No image uploaded<p></li>`);
+  } else {
+    $('#checkinFeed').append(`<img src="${url}" /></li>`);
+  }
+}
 
 function createCheckIns(currentUser, checkins) {
 
@@ -64,8 +71,9 @@ function createCheckIns(currentUser, checkins) {
           $('#checkinFeed').append(`<li class="list-group-item list-group-item-success"><p><b>You</b> checked in for <b>${checkins.title}</b> on ${checkInKey}</p>
           <p><b>description:</b> ${checkInDateObjects[checkInKey][userKey].description}</p>
           <p><b>location:</b> ${checkInDateObjects[checkInKey][userKey].location.latitude}, ${checkInDateObjects[checkInKey][userKey].location.longitude}</p>
-          <p><b>participant:</b> ${checkInDateObjects[checkInKey][userKey].participantName}</p>
-          <img src="${checkInDateObjects[checkInKey][userKey].photoURL}" /></li>`);
+          <p><b>participant:</b> ${checkInDateObjects[checkInKey][userKey].participantName}</p>`);
+          url = checkInDateObjects[checkInKey][userKey].photoURL;
+          checkURL(url);
         } else {
           $('#checkinFeed').append(`<li class="list-group-item list-group-item-danger"><b>You</b> missed a check-in for <b>${checkins.title}</b> on ${checkInKey}</li>`);
         }
@@ -74,8 +82,9 @@ function createCheckIns(currentUser, checkins) {
           $('#checkinFeed').append(`<li class="list-group-item list-group-item-info"><p><b>${checkInDateObjects[checkInKey][userKey].participantName}</b> checked in for <b>${checkins.title}</b> on ${checkInKey}</p>
           <p><b>description:</b> ${checkInDateObjects[checkInKey][userKey].description}</p>
           <p><b>location:</b> ${checkInDateObjects[checkInKey][userKey].location.latitude}, ${checkInDateObjects[checkInKey][userKey].location.longitude}</p>
-          <p><b>participant:</b> ${checkInDateObjects[checkInKey][userKey].participantName}</p>
-          <img src="${checkInDateObjects[checkInKey][userKey].photoURL}" /></li>`);
+          <p><b>participant:</b> ${checkInDateObjects[checkInKey][userKey].participantName}</p>`);
+          url = checkInDateObjects[checkInKey][userKey].photoURL;
+          checkURL(url);
         } else {
           $('#checkinFeed').append(`<li class="list-group-item list-group-item-warning"><b>${checkins.participantNames[i]}</b> missed a check-in for <b>${checkins.title}</b> on ${checkInKey}</li>`);
         }
