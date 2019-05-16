@@ -62,23 +62,23 @@ function createCheckIns(currentUser, checkins) {
       if (currentUser == userKey) {
 
         if (checkInDateObjects[checkInKey][userKey]) {
-          $('#checkinFeed').append(`<li class="list-group-item list-group-item-success"><p><b>You</b> checked in for ${checkins.title} on <b>${checkInKey}</b></p>
+          $('#checkinFeed').append(`<li class="list-group-item list-group-item-success"><p><b>You</b> checked in for <b>${checkins.title}</b> on ${checkInKey}</p>
           <p><b>description:</b> ${checkInDateObjects[checkInKey][userKey].description}</p>
           <p><b>location:</b> ${checkInDateObjects[checkInKey][userKey].location.latitude}, ${checkInDateObjects[checkInKey][userKey].location.longitude}</p>
           <p><b>participant:</b> ${checkInDateObjects[checkInKey][userKey].participantName}</p>
           <img src="${checkInDateObjects[checkInKey][userKey].photoURL}" /></li>`);
         } else {
-          $('#checkinFeed').append(`<li class="list-group-item list-group-item-danger"><b>You</b> missed a check-in for ${checkins.title} on <b>${checkInKey}</b></li>`);
+          $('#checkinFeed').append(`<li class="list-group-item list-group-item-danger"><b>You</b> missed a check-in for <b>${checkins.title}</b> on ${checkInKey}</li>`);
         }
       } else {
         if (checkInDateObjects[checkInKey][userKey]) {
-          $('#checkinFeed').append(`<li class="list-group-item list-group-item-info"><p><b>${checkInDateObjects[checkInKey][userKey].participantName}</b> checked in for ${checkins.title} on <b>${checkInKey}</b></p>
+          $('#checkinFeed').append(`<li class="list-group-item list-group-item-info"><p><b>${checkInDateObjects[checkInKey][userKey].participantName}</b> checked in for <b>${checkins.title}</b> on ${checkInKey}</p>
           <p><b>description:</b> ${checkInDateObjects[checkInKey][userKey].description}</p>
           <p><b>location:</b> ${checkInDateObjects[checkInKey][userKey].location.latitude}, ${checkInDateObjects[checkInKey][userKey].location.longitude}</p>
           <p><b>participant:</b> ${checkInDateObjects[checkInKey][userKey].participantName}</p>
           <img src="${checkInDateObjects[checkInKey][userKey].photoURL}" /></li>`);
         } else {
-          $('#checkinFeed').append(`<li class="list-group-item list-group-item-warning"><b>${checkInDateObjects[checkInKey][userKey].participantName}</b> missed a check-in for ${checkins.title} on <b>${checkInKey}</b></li>`);
+          $('#checkinFeed').append(`<li class="list-group-item list-group-item-warning"><b>${checkInDateObjects[checkInKey][userKey].participantName}</b> missed a check-in for <b>${checkins.title}</b> on ${checkInKey}</li>`);
         }
       }
 
