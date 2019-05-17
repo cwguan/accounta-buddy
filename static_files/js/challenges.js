@@ -62,6 +62,7 @@ function createCheckIns(currentUser, checkins) {
 
   checkInDateObjects = checkins.checkIns;
   checkInKeys = Object.keys(checkInDateObjects);
+  checkInKeys = checkInKeys.reverse();
   userKeys = Object.values(checkins.participants);
   checkInKeys.forEach(function(checkInKey) {
     $('#checkinFeed').append(`<li class="list-group-item"><b>${checkInKey}</b></li>`);
