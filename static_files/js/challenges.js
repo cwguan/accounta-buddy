@@ -4,10 +4,19 @@
 function createChallengeView(challenge, i) {
   return `<div class="column">
       <h2><b><font color='#7A7A7A'>${challenge.title}</font></b></h2>
-      <p>${challenge.description}</p>
+
+      <p><b>Description:</b> ${challenge.description}</p>
+
+
       <p><b>Participants:</b> ${challenge.participantNames.join(", ")}</p>
-      <p>Check in every day by <b>${challenge.checkInDeadline}</b></p>
-      <p>Don't forget, or you owe them <b>${challenge.cost}</b> Accounta-bux!</p>
+
+
+      <p><b>Check in: </b> every day by ${challenge.checkInDeadline}</p>
+
+
+      <p><b>Cost: </b> ${challenge.cost} Accounta-bux</p>
+
+
   </div>`;
 }
 
@@ -71,11 +80,30 @@ function createCheckIns(currentUser, checkins) {
         if (checkInDateObjects[checkInKey][userKey]) {
           newInfo = `<li class="list-group-item list-group-item-success"><p><b>You</b> checked in for <b>${checkins.title}</b> on ${checkInKey}</p>
           <p><b>description:</b> ${checkInDateObjects[checkInKey][userKey].description}</p>
+
+          <div class="container-fluid">
+    
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-lat=${checkInDateObjects[checkInKey][userKey].location.latitude} data-lng=${checkInDateObjects[checkInKey][userKey].location.longitude}>
+              Location
+            </button>
+
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#photoModal">
+              Photo
+            </button>
+           </div> 
+
           <p><b>location:</b> ${checkInDateObjects[checkInKey][userKey].location.latitude}, ${checkInDateObjects[checkInKey][userKey].location.longitude}</p>
+
           <p><b>participant:</b> ${checkInDateObjects[checkInKey][userKey].participantName}</p>`;
+        
+
           url = checkInDateObjects[checkInKey][userKey].photoURL;
+          
           newInfo = newInfo + checkURL(url);
+        
           $('#checkinFeed').append(newInfo);
+          $('#photoModal #image').append(checkURL(url));
+          
         } else {
           $('#checkinFeed').append(`<li class="list-group-item list-group-item-danger"><b>You</b> missed a check-in for <b>${checkins.title}</b> on ${checkInKey}</li>`);
         }
