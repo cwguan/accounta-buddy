@@ -103,6 +103,9 @@ function submitCheckIn(challengeUID) {
   let currentUser = firebase.auth().currentUser;
   let database = firebase.database();
   var storageRef = firebase.storage().ref();
+  //for use in checking if already submitted a checkin
+  //var existingCheckin = false;
+
 
   // Get form input
   let description = $('#description').val();
@@ -151,6 +154,31 @@ function submitCheckIn(challengeUID) {
 
     });
   }); // End of Storage uploadTask state_changed handling
+
+  //code for updating user money
+  var cost = [];
+  var otherUsers = [];
+  var checkedIn = false;
+  database.ref('challenges/' + challengeUID).once('value').then(function(snapshot) {
+
+    let users = Object.values(snapshot.val().participants);
+    for (const user of users) {
+      if (user != currentUser.uid) {
+        otherUsers.push(user);
+      }
+    }
+    cost = snapshot.val().cost;
+    database.ref('users/' + currentUser.uid + '/balance').once('value').then(function(snapshot) {
+      let currentBalance = snapshot.val() + cost * otherUsers.length;
+      database.ref('users/' + currentUser.uid + '/balance').set(currentBalance);
+    });
+    for (const otherUser of otherUsers) {
+      database.ref('users/' + otherUser + '/balance').once('value').then(function(snapshot) {
+        let tempBalance = snapshot.val() - cost;
+        database.ref('users/' + otherUser + '/balance').set(tempBalance);
+      });
+    }
+  });
 }
 
 
