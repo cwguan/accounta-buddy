@@ -98,18 +98,27 @@
       <h1>Welcome to Accounta-Buddy! This is the page where you add funds</h1>
       <div id='status'></div>
 
-      <button type="button" class="btn btn-success btn-lg" onclick='return addBux();'>Add 5 Accountabux</button>
-      <h3> Current Balance: </h3>
+      <button type="button" class="btn btn-success btn-lg" onclick='return getBalance();'>Add 5 Accountabux</button>
+      <div id='challengeInfo'></div>
       <script> function addBux(){
         var user = firebase.auth().currentUser;
         user.updateProfile({
-          balance = balance + 5;
-        })
+          balance = balance + 5,
+        });
         if (user != null){
           user.balance = user.balance + 5;
         }
 
       }
+      database.ref('users/' + currentUser.uid).once('value').then(function(snapshot) {
+          let userBalance = snapshot.val().balance;       
+  });
+    $('#userBalance').append(userBalance);
+
+
+
+
+
       </script>      
     </div>
   </body>
