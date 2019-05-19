@@ -103,9 +103,6 @@ function submitCheckIn(challengeUID) {
   let currentUser = firebase.auth().currentUser;
   let database = firebase.database();
   var storageRef = firebase.storage().ref();
-  //for use in checking if already submitted a checkin
-  //var existingCheckin = false;
-
 
   // Get form input
   let description = $('#description').val();
@@ -113,53 +110,25 @@ function submitCheckIn(challengeUID) {
     'latitude': $('#latitude').val(),
     'longitude': $('#longitude').val()
   };
+  let photoURL = "someURL";
+  let checkInTime = getCurrentTime();
+  let date = getCurrentDate();
 
-  // Extract only the YYYY-MM-DD from Date object
-  let date = new Date().toISOString();
-  date = date.substring(0, 10);
-
-  var uploadTask = storageRef.child(`${challengeUID}/${date}/${currentUser.uid}.${currentImage.extension}`).put(currentImage.file);
-  uploadTask.on('state_changed', function(snapshot) {
-    // Observe state change events such as progress, pause, and resume
-    // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-    var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-    console.log('Upload is ' + progress + '% done');
-    switch (snapshot.state) {
-      case firebase.storage.TaskState.PAUSED: // or 'paused'
-        console.log('Upload is paused');
-        break;
-      case firebase.storage.TaskState.RUNNING: // or 'running'
-        console.log('Upload is running');
-        break;
-    }
-
-  }, function(error) {
-    // Handle unsuccessful uploads
-    console.log(error);
-
-  }, function() {
-    // Handle successful uploads on complete
-    uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-      // Once image has been uploaded to Storage, create entry in Realtime Database
-
-      let update = {
-        participantName: currentUser.displayName,
-        checkInTime: getCurrentTime(),
-        description: description,
-        photoURL: downloadURL,
-        location: location,
-      };
-
-      database.ref('challenges/' + challengeUID + '/checkIns/' + date + '/' + currentUser.uid).update(update);
-
-    });
-  }); // End of Storage uploadTask state_changed handling
+  let update = {
+    participantName: currentUser.displayName,
+    checkInTime: checkInTime,
+    description: description,
+    photoURL: photoURL,
+    location: location,
+  };
 
   //code for updating user money
   var cost = [];
   var otherUsers = [];
-  var checkedIn = false;
+  var needToUpdateBalance = false;
   database.ref('challenges/' + challengeUID).once('value').then(function(snapshot) {
+    let challenge = snapshot.val();
+    cost = snapshot.val().cost;
 
     let users = Object.values(snapshot.val().participants);
     for (const user of users) {
@@ -167,16 +136,59 @@ function submitCheckIn(challengeUID) {
         otherUsers.push(user);
       }
     }
-    cost = snapshot.val().cost;
-    database.ref('users/' + currentUser.uid + '/balance').once('value').then(function(snapshot) {
-      let currentBalance = snapshot.val() + cost * otherUsers.length;
-      database.ref('users/' + currentUser.uid + '/balance').set(currentBalance);
-    });
-    for (const otherUser of otherUsers) {
-      database.ref('users/' + otherUser + '/balance').once('value').then(function(snapshot) {
-        let tempBalance = snapshot.val() - cost;
-        database.ref('users/' + otherUser + '/balance').set(tempBalance);
-      });
+
+    // Check if there's already a check-in from currentUser
+    if (!challenge.checkIns) {
+      needToUpdateBalance = true;
+    } else if (!challenge.checkIns[getCurrentDate()]) {
+      needToUpdateBalance = true;
+    } else if (!challenge.checkIns[getCurrentDate()].hasOwnProperty(currentUser.uid)) {
+      needToUpdateBalance = true;
+    }
+
+    if (currentImage.file) {
+      var uploadTask = storageRef.child(`${challengeUID}/${date}/${currentUser.uid}.${currentImage.extension}`).put(currentImage.file);
+      uploadTask.on('state_changed', function(snapshot) {
+        // Observe state change events such as progress, pause, and resume
+        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Upload is ' + progress + '% done');
+        switch (snapshot.state) {
+          case firebase.storage.TaskState.PAUSED: // or 'paused'
+            console.log('Upload is paused');
+            break;
+          case firebase.storage.TaskState.RUNNING: // or 'running'
+            console.log('Upload is running');
+            break;
+        }
+
+      }, function(error) {
+        // Handle unsuccessful uploads
+        console.log(error);
+
+      }, function() {
+        // Handle successful uploads on complete
+        uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+          // Once image has been uploaded to Storage, create entry in Realtime Database
+          update.photoURL = downloadURL;
+          database.ref('challenges/' + challengeUID + '/checkIns/' + date + '/' + currentUser.uid).update(update);
+          currentImage = {};
+          if (needToUpdateBalance) {
+            updateBalancesOnCheckIn(cost, otherUsers);
+          }
+          // Weird jQuery conflict to prevent using modal method
+          $('#closeCheckInModal').trigger('click');
+        });
+      }); // End of Storage uploadTask state_changed handling
+
+    // No photo was uploaded
+    } else {
+      database.ref('challenges/' + challengeUID + '/checkIns/' + date + '/' + currentUser.uid).update(update);
+      if (needToUpdateBalance) {
+        updateBalancesOnCheckIn(cost, otherUsers);
+      }
+      // Weird jQuery conflict to prevent using modal method
+      $('#closeCheckInModal').trigger('click');
     }
   });
 }
@@ -184,22 +196,42 @@ function submitCheckIn(challengeUID) {
 
 // Gets time in HH:DD in correct format for database
 function getCurrentTime() {
-  let currentTime = new Date();
-  let checkInTime = "";
-  if (currentTime.getHours() < 10) {
-    console.log(currentTime.getHours())
-    checkInTime = "0" + currentTime.getHours() + ":";
-  } else {
-    checkInTime = currentTime.getHours() + ":";
-  }
+  let tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
+  let localISOTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
 
-  if (currentTime.getMinutes() < 10) {
-    checkInTime = checkInTime + "0" + currentTime.getMinutes();
-  } else {
-     checkInTime = checkInTime + currentTime.getMinutes();
-  }
-
+  // TODO: FIX, IT'S HACKY
+  let checkInTime = localISOTime.slice(localISOTime.indexOf("T") + 1, localISOTime.indexOf(":") + 3);
   return checkInTime;
+}
+
+
+// Gets date in YYYY-MM-DD in correct format for database
+function getCurrentDate() {
+  let tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
+  let localISOTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
+
+  // TODO: FIX, IT'S HACKY
+  let checkInDate = localISOTime.slice(0, localISOTime.indexOf("T"));
+  return checkInDate;
+}
+
+
+// Update balances when a user submits a check-in
+function updateBalancesOnCheckIn(cost, otherUsers) {
+  let currentUser = firebase.auth().currentUser;
+  let database = firebase.database();
+
+  database.ref('users/' + currentUser.uid + '/balance').once('value').then(function(snapshot) {
+    let currentBalance = snapshot.val() + cost * otherUsers.length;
+    database.ref('users/' + currentUser.uid + '/balance').set(currentBalance);
+  });
+
+  for (const otherUser of otherUsers) {
+    database.ref('users/' + otherUser + '/balance').once('value').then(function(snapshot) {
+      let tempBalance = snapshot.val() - cost;
+      database.ref('users/' + otherUser + '/balance').set(tempBalance);
+    });
+  }
 }
 
 
