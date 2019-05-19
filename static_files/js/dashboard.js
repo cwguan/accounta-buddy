@@ -125,19 +125,25 @@ function submitCheckIn(challengeUID) {
   //code for updating user money
   var cost = [];
   var otherUsers = [];
-  var checkedIn = false;
+  var needToUpdateBalance = false;
   database.ref('challenges/' + challengeUID).once('value').then(function(snapshot) {
     let challenge = snapshot.val();
-    // Check if there's already a check-in from currentUser
-    if (!challenge.checkIns[getCurrentDate()].hasOwnProperty(currentUser.uid)) {
-      let users = Object.values(snapshot.val().participants);
-      for (const user of users) {
-        if (user != currentUser.uid) {
-          otherUsers.push(user);
-        }
+    cost = snapshot.val().cost;
+
+    let users = Object.values(snapshot.val().participants);
+    for (const user of users) {
+      if (user != currentUser.uid) {
+        otherUsers.push(user);
       }
-      cost = snapshot.val().cost;
-      updateBalancesOnCheckIn(cost, otherUsers);
+    }
+
+    // Check if there's already a check-in from currentUser
+    if (!challenge.checkIns) {
+      needToUpdateBalance = true;
+    } else if (!challenge.checkIns[getCurrentDate()]) {
+      needToUpdateBalance = true;
+    } else if (!challenge.checkIns[getCurrentDate()].hasOwnProperty(currentUser.uid)) {
+      needToUpdateBalance = true;
     }
 
     if (currentImage.file) {
@@ -167,6 +173,9 @@ function submitCheckIn(challengeUID) {
           update.photoURL = downloadURL;
           database.ref('challenges/' + challengeUID + '/checkIns/' + date + '/' + currentUser.uid).update(update);
           currentImage = {};
+          if (needToUpdateBalance) {
+            updateBalancesOnCheckIn(cost, otherUsers);
+          }
           // Weird jQuery conflict to prevent using modal method
           $('#closeCheckInModal').trigger('click');
         });
@@ -175,6 +184,9 @@ function submitCheckIn(challengeUID) {
     // No photo was uploaded
     } else {
       database.ref('challenges/' + challengeUID + '/checkIns/' + date + '/' + currentUser.uid).update(update);
+      if (needToUpdateBalance) {
+        updateBalancesOnCheckIn(cost, otherUsers);
+      }
       // Weird jQuery conflict to prevent using modal method
       $('#closeCheckInModal').trigger('click');
     }

@@ -54,7 +54,7 @@ function checkURL(url) {
   if (url == 'someURL') {
     return `<p>No image uploaded<p></li>`;
   } else {
-    return `<img src="${url}" /></li>`;
+    return `<img class="img-fluid" src="${url}" /></li>`;
   }
 }
 
