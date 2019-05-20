@@ -32,8 +32,43 @@ function readURL(input) {
 // Create a standard view a challenge a user is participating in
 // Each challenge is a part of a collapsible accordion
 function createChallengeView(challenge, i) {
-  return `<div class="card">
-    <div class="card-header" id="heading${i}">
+  let currentUser = firebase.auth().currentUser;
+  let haveCheckedIn = false;
+  let buddyHasCheckedIn = false;
+
+  // Check if currentUser has checked-in today
+  if (challenge.hasOwnProperty('checkIns') &&
+      challenge.checkIns.hasOwnProperty(getCurrentDate()) &&
+      challenge.checkIns[getCurrentDate()].hasOwnProperty(currentUser.uid)) {
+      haveCheckedIn = true;
+  }
+
+  // Check if buddy has checked-in today
+  let buddyUID;
+  for (participant in challenge.participants) {
+    if (participant != currentUser.uid) {
+      buddyUID = participant;
+    }
+  }
+  if (challenge.hasOwnProperty('checkIns') &&
+      challenge.checkIns.hasOwnProperty(getCurrentDate()) &&
+      challenge.checkIns[getCurrentDate()].hasOwnProperty(buddyUID)) {
+      buddyHasCheckedIn = true;
+  }
+
+  // Set the right text, UI elements according to check-in statuses
+  let headerColor = '#f5c6cb';
+  let checkInBtnText = "Check-In";
+  let remindBuddyBtn = buddyHasCheckedIn ? "" :
+                      `<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#remindBuddyModal" onclick="sendReminderEmail('${challenge.uid}');">Remind Buddy</button>`;
+
+  if (haveCheckedIn) {
+    headerColor = 'rgba(0,0,0,.03)';
+    checkInBtnText = "Check-In Again";
+  }
+
+  return `<div class="card" id='${challenge.uid}'>
+    <div class="card-header" id="heading${i}" style="background-color:${headerColor}">
       <h5 class="mb-0">
         <button class="btn btn-link" data-toggle="collapse" data-target="#collapse${i}" aria-expanded="true" aria-controls="collapse${i}">
           ${challenge.title}
@@ -48,12 +83,18 @@ function createChallengeView(challenge, i) {
         <p><b>Cost:</b> ${challenge.cost} Accounta-Bux</p>
         <p><b>Check-In Time:</b> ${challenge.checkInDeadline} </p>
         <p>
-          <button type="button" class="btn btn-primary" onclick="setCheckInChallenge('${challenge.uid}');" data-toggle="modal" data-target="#checkInModal">Check-In</button>
-          <button type="button" class="btn btn-secondary" onclick="goToChallengeDetails('${challenge.uid}');">Challenge Details</button>
+          <button type="button" class="btn btn-primary" onclick="setCheckInChallenge('${challenge.uid}');" data-toggle="modal" data-target="#checkInModal">${checkInBtnText}</button>
+          ${remindBuddyBtn}
+          <button type="button" class="btn btn-outline-secondary" onclick="goToChallengeDetails('${challenge.uid}');">Challenge Details</button>
         </p>
       </div>
     </div>
   </div>`;
+}
+
+
+// TODO TODO TODO Look into emails on firebase
+function sendReminderEmail(challengeUID) {
 }
 
 
@@ -138,9 +179,9 @@ function submitCheckIn(challengeUID) {
     }
 
     // Check if there's already a check-in from currentUser
-    if (!challenge.checkIns) {
+    if (!challenge.hasOwnProperty('checkIns')) {
       needToUpdateBalance = true;
-    } else if (!challenge.checkIns[getCurrentDate()]) {
+    } else if (!challenge.checkIns.hasOwnProperty(getCurrentDate())) {
       needToUpdateBalance = true;
     } else if (!challenge.checkIns[getCurrentDate()].hasOwnProperty(currentUser.uid)) {
       needToUpdateBalance = true;
@@ -178,6 +219,7 @@ function submitCheckIn(challengeUID) {
           }
           // Weird jQuery conflict to prevent using modal method
           $('#closeCheckInModal').trigger('click');
+          $("#" + challengeUID).children(":first-child").css("background-color", 'rgba(0,0,0,.03)');
         });
       }); // End of Storage uploadTask state_changed handling
 
@@ -189,6 +231,7 @@ function submitCheckIn(challengeUID) {
       }
       // Weird jQuery conflict to prevent using modal method
       $('#closeCheckInModal').trigger('click');
+      $("#" + challengeUID).children(":first-child").css("background-color", 'rgba(0,0,0,.03)');
     }
   });
 }
