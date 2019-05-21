@@ -92,7 +92,8 @@ function createCheckIns(currentUser, checkins) {
             Photo
           </button>
          </div> 
-         <p></p>`;
+         <p></p>
+         `;
 
 
           // location code if needed
