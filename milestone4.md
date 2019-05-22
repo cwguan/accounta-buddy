@@ -21,7 +21,7 @@ For milestone 3 our Challenge Details Page was not formatted well as images expa
 ![Milestone4-1](./milestone4-images/milestone4-details2.png)
 
 
-## Other ScreenShots: Log-In
+## Other ScreenShots: Log-In and New Challenge
 For milestone 4 we  focused our efforts on functionality and the Challenge Details Page so the other pages are the same as before.
 ### Milestone 4
 ![Milestone3-1](./milestone3-images/milestone3-login.JPG)
