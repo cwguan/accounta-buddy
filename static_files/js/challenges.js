@@ -93,6 +93,7 @@ function createCheckIns(currentUser, checkins) {
           </button>
          </div> 
          <p></p>
+
          `;
 
 
@@ -102,7 +103,7 @@ function createCheckIns(currentUser, checkins) {
           url = checkInDateObjects[checkInKey][userKey].photoURL;
           
           // not needed atm because photo appears in modal
-          //newInfo = newInfo + checkURL(url);
+          newInfo = newInfo + checkURL(url);
         
           $('#checkinFeed').append(newInfo);
           $('#photoModal #image').append(checkURL(url));
@@ -131,7 +132,7 @@ function createCheckIns(currentUser, checkins) {
           url = checkInDateObjects[checkInKey][userKey].photoURL;
 
           // not needed atm because photo appears in modal
-          //newInfo = newInfo + checkURL(url);
+          newInfo = newInfo + checkURL(url);
           
           $('#checkinFeed').append(newInfo);
         } else {
