@@ -63,10 +63,35 @@ function checkURL(url) {
   if (url == 'someURL') {
     return `<p>No image uploaded<p></li>`;
   } else {
-    return `<img class="img-fluid" src="${url}" /></li>`;
+    return `<img class="img-fluid" src="${url}" /> </li>`;
   }
 }
 
+// function sendImg(url){
+//   var modal = document.getElementById('photoModal');
+//   var img = checkURL(url);
+//   var modalImg = document.getElementById('image');
+//   modalImg.alt = this.alt;
+//   captionText.innerHTML = this.alt;
+
+  // if (url == 'someURL'){
+  //   return '<p> no image uploaded<p></li>';
+  // }else{
+  //   return $('#image').attr("src", url);
+  // }
+
+// }
+function sendURL(url){
+  var modalImg = document.getElementById("image");
+  if (url == 'someURL'){
+    return document.getElementById("msg").innerHTML = "No image uploaded";
+  }else{
+    console.log(url);
+    return modalImg.src = url;
+    
+  }
+
+}
 
 function createCheckIns(currentUser, checkins) {
 
@@ -74,11 +99,17 @@ function createCheckIns(currentUser, checkins) {
   checkInKeys = Object.keys(checkInDateObjects);
   checkInKeys = checkInKeys.reverse();
   userKeys = Object.values(checkins.participants);
+
   checkInKeys.forEach(function(checkInKey) {
     $('#checkinFeed').append(`<li class="list-group-item"><b>${checkInKey}</b></li>`);
     userKeys.forEach(function(userKey, i) {
       if (currentUser == userKey) {
         if (checkInDateObjects[checkInKey][userKey]) {
+
+          url = checkInDateObjects[checkInKey][userKey].photoURL;
+
+         
+
           newInfo = `<li class="list-group-item list-group-item-success"><p><b>You</b> checked in for <b>${checkins.title}</b> on ${checkInKey}</p>
           <p><b>description:</b> ${checkInDateObjects[checkInKey][userKey].description}</p>
 
@@ -88,26 +119,25 @@ function createCheckIns(currentUser, checkins) {
           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-lat=${checkInDateObjects[checkInKey][userKey].location.latitude} data-lng=${checkInDateObjects[checkInKey][userKey].location.longitude}>
             Location
           </button>
-
-          <button type="button" class="btn btn-success" data-toggle="modal" data-target="#photoModal">
+          
+          <button type="button" class="btn btn-success" onclick="sendURL(url);" data-toggle="modal" data-target="#photoModal" >
             Photo
           </button>
          </div> 
          <p></p>
          <!--<p><b>location:</b> ${checkInDateObjects[checkInKey][userKey].location.latitude}, ${checkInDateObjects[checkInKey][userKey].location.longitude}</p> -->
          `;
-
+          newInfo = newInfo+checkURL(url);
 
           // location code if needed
           // <p><b>location:</b> ${checkInDateObjects[checkInKey][userKey].location.latitude}, ${checkInDateObjects[checkInKey][userKey].location.longitude}</p>
 
-          url = checkInDateObjects[checkInKey][userKey].photoURL;
           
           // not needed atm because photo appears in modal
           //newInfo = newInfo + checkURL(url);
         
           $('#checkinFeed').append(newInfo);
-          $('#photoModal #image').append(checkURL(url));
+          //$('#photoModal #image').append(checkURL(url));
           //$('#photoModal #image').append(checkURL(url));
           
         } else {
@@ -115,6 +145,9 @@ function createCheckIns(currentUser, checkins) {
         }
       } else {
         if (checkInDateObjects[checkInKey][userKey]) {
+
+          url = checkInDateObjects[checkInKey][userKey].photoURL;
+
           newInfo = `<li class="list-group-item list-group-item-info"><p><b>${checkInDateObjects[checkInKey][userKey].participantName}</b> checked in for <b>${checkins.title}</b> on ${checkInKey}</p>
           <p><b>description:</b> ${checkInDateObjects[checkInKey][userKey].description}</p>
           <p><b>participant:</b> ${checkInDateObjects[checkInKey][userKey].participantName}</p>
@@ -122,18 +155,18 @@ function createCheckIns(currentUser, checkins) {
           Location
           </button>
 
-          <button type="button" class="btn btn-success" data-toggle="modal" data-target="#photoModal">
+          <!--<button type="button" class="btn btn-success" onclick="sendURL(url)" data-toggle="modal" data-target="#photoModal">
           Photo
-          </button>
+          </button>-->
           </div> 
           <p></p>
           
           `;
+          newInfo = newInfo+checkURL(url);
 
           // location code 
           // <p><b>location:</b> ${checkInDateObjects[checkInKey][userKey].location.latitude}, ${checkInDateObjects[checkInKey][userKey].location.longitude}</p>
 
-          url = checkInDateObjects[checkInKey][userKey].photoURL;
 
           // not needed atm because photo appears in modal
           //newInfo = newInfo + checkURL(url);
