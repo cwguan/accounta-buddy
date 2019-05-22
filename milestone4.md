@@ -7,9 +7,9 @@
 
 
 ## ScreenShot 1: Home
-In milestone 3 We implemented a grid system that splits the screen in two showing the user their challenges and the details of them on the left while the right has an activity feed that displays actions that are relevant to the user. In milestone 4 we color coded the challenges to show urgency that thye need to usbmit thier evidence soon. In addition we added a remind accounta-buddy button in the drop down of the challenge that supposed will send a notification to the other participant that they should pay up. 
+In milestone 3 we implemented a grid system that splits the screen in two showing the user their challenges and the details of them on the left while the right has an activity feed that displays actions that are relevant to the user. In milestone 4 we color coded the challenges to show urgency that thye need to usbmit thier evidence soon. In addition we added a remind accounta-buddy button in the drop down of the challenge that supposed will send a notification to the other participant that they should pay up. 
 ### Milestone 4
-![Milestone4-1](./milestone4-images/milestone4-dash.jpg)
+![Milestone4-1](./milestone4-images/milestone4-dash.JPG)
 ### Milestone 3
 ![Milestone3-1](./milestone3-images/milestone3-dash.png)
 
@@ -17,8 +17,8 @@ In milestone 3 We implemented a grid system that splits the screen in two showin
 ## ScreenShot 2: Details Page
 For milestone 3 our Challenge Details Page was not formatted well as images expanded the history container to fit the size of the image. For milestone 4 we realized that users don't need to see the photo and map immediately and just want to know that their accounta-buddy submitted evidence so we made buttons that open up to modals displaying the photo and map. 
 ### Milestone 4
-![Milestone4-1](./milestone4-images/milestone4-details1.PNG)
-![Milestone4-1](./milestone4-images/milestone4-details2.PNG)
+![Milestone4-1](./milestone4-images/milestone4-details1.png)
+![Milestone4-1](./milestone4-images/milestone4-details2.png)
 
 
 ## Other ScreenShots: Log-In
