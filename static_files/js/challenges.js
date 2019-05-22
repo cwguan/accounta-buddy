@@ -81,17 +81,7 @@ function checkURL(url) {
   // }
 
 // }
-function sendURL(url){
-  var modalImg = document.getElementById("image");
-  if (url == 'someURL'){
-    return document.getElementById("msg").innerHTML = "No image uploaded";
-  }else{
-    console.log(url);
-    return modalImg.src = url;
-    
-  }
 
-}
 
 function createCheckIns(currentUser, checkins) {
 
@@ -123,11 +113,22 @@ function createCheckIns(currentUser, checkins) {
           <button type="button" class="btn btn-success" onclick="sendURL(url);" data-toggle="modal" data-target="#photoModal" >
             Photo
           </button>
+          <script> function sendURL(url){
+            var modalImg = document.getElementById("image");
+            var newhtml = checkURL(url);
+            if (url == 'someURL'){
+              return document.getElementById("msg").innerHTML = "No image uploaded";
+            }else{
+              modalImg.src = url;
+            }
+          }
+          </script>
+          
          </div> 
          <p></p>
          <!--<p><b>location:</b> ${checkInDateObjects[checkInKey][userKey].location.latitude}, ${checkInDateObjects[checkInKey][userKey].location.longitude}</p> -->
          `;
-          newInfo = newInfo+checkURL(url);
+          //newInfo = newInfo+checkURL(url);
 
           // location code if needed
           // <p><b>location:</b> ${checkInDateObjects[checkInKey][userKey].location.latitude}, ${checkInDateObjects[checkInKey][userKey].location.longitude}</p>
@@ -155,14 +156,25 @@ function createCheckIns(currentUser, checkins) {
           Location
           </button>
 
-          <!--<button type="button" class="btn btn-success" onclick="sendURL(url)" data-toggle="modal" data-target="#photoModal">
+          <button type="button" class="btn btn-success" onclick="sendURL(url)" data-toggle="modal" data-target="#photoModal">
           Photo
-          </button>-->
+          </button>
+          <script> function sendURL(url){
+            var modalImg = document.getElementById("image");
+            var newhtml = checkURL(url);
+            if (url == 'someURL'){
+              return document.getElementById("msg").innerHTML = "No image uploaded";
+            }else{
+              modalImg.src = url;
+            
+            }
+          }
+          </script>
           </div> 
           <p></p>
           
           `;
-          newInfo = newInfo+checkURL(url);
+          //newInfo = newInfo+checkURL(url);
 
           // location code 
           // <p><b>location:</b> ${checkInDateObjects[checkInKey][userKey].location.latitude}, ${checkInDateObjects[checkInKey][userKey].location.longitude}</p>
