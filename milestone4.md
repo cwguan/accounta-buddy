@@ -22,7 +22,7 @@ For milestone 3 our Challenge Details Page was not formatted well as images expa
 
 
 ## Other ScreenShots: Log-In
-In milestone 2 we used input text boxes to prompt a login that had no functionality. In milestone 3 we are using Firebase's log-in API that actually allows users to create accounts or sign in. If users arent signed in they aren't able to access the web-app.
+For milestone 4 we  focused our efforts on functionality and the Challenge Details Page so the other pages are the same as before.
 ### Milestone 4
 ![Milestone3-1](./milestone3-images/milestone3-login.JPG)
 ![Milestone3-1](./milestone3-images/milestone3-newchallenge.JPG)
