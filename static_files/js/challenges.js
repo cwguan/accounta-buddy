@@ -67,6 +67,7 @@ function checkURL(url) {
   }
 }
 
+
 function createCheckIns(currentUser, checkins) {
 
   checkInDateObjects = checkins.checkIns;
@@ -93,7 +94,7 @@ function createCheckIns(currentUser, checkins) {
           </button>
          </div> 
          <p></p>
-
+         <!--<p><b>location:</b> ${checkInDateObjects[checkInKey][userKey].location.latitude}, ${checkInDateObjects[checkInKey][userKey].location.longitude}</p> -->
          `;
 
 
@@ -103,10 +104,11 @@ function createCheckIns(currentUser, checkins) {
           url = checkInDateObjects[checkInKey][userKey].photoURL;
           
           // not needed atm because photo appears in modal
-          newInfo = newInfo + checkURL(url);
+          //newInfo = newInfo + checkURL(url);
         
           $('#checkinFeed').append(newInfo);
           $('#photoModal #image').append(checkURL(url));
+          //$('#photoModal #image').append(checkURL(url));
           
         } else {
           $('#checkinFeed').append(`<li class="list-group-item list-group-item-danger"><b>You</b> missed a check-in for <b>${checkins.title}</b> on ${checkInKey}</li>`);
@@ -124,7 +126,9 @@ function createCheckIns(currentUser, checkins) {
           Photo
           </button>
           </div> 
-          <p></p>`;
+          <p></p>
+          
+          `;
 
           // location code 
           // <p><b>location:</b> ${checkInDateObjects[checkInKey][userKey].location.latitude}, ${checkInDateObjects[checkInKey][userKey].location.longitude}</p>
@@ -132,8 +136,8 @@ function createCheckIns(currentUser, checkins) {
           url = checkInDateObjects[checkInKey][userKey].photoURL;
 
           // not needed atm because photo appears in modal
-          newInfo = newInfo + checkURL(url);
-          
+          //newInfo = newInfo + checkURL(url);
+        
           $('#checkinFeed').append(newInfo);
         } else {
           $('#checkinFeed').append(`<li class="list-group-item list-group-item-warning"><b>${checkins.participantNames[i]}</b> missed a check-in for <b>${checkins.title}</b> on ${checkInKey}</li>`);
