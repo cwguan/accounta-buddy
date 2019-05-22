@@ -18,7 +18,7 @@
     <!-- Maps api KEY-->
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVLJ0ancnyRzsLbznksZIaTSO5GqayRpw&callback=initMap"
     type="text/javascript"></script>
-    
+
     <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#config-web-app -->
 
@@ -130,36 +130,32 @@
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      
+
                       </div>
                     </div>
                   </div>
                 </div>
-
-
-                <div class="modal fade" id="photoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-                            <div id="image"> </div>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-
           </ul>
         </div>
       </div>
+      <div class="modal fade" id="photoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                  <div id="image"> </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+              </div>
+            </div>
+          </div>
+        </div>
       <div id='status'> </div>
     </div>
 
@@ -168,30 +164,30 @@
       site =checkURL(url);
       return site;
    };
-   </script> 
+   </script>
    <script> $(document).ready(function() {
       var map = null;
       var myMarker;
       var myLatlng;
-    
+
       function initializeGMap(lat, lng) {
         myLatlng = new google.maps.LatLng(lat, lng);
-    
+
         var myOptions = {
           zoom: 13.5,
           zoomControl: true,
           center: myLatlng,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
-    
+
         map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-    
+
         myMarker = new google.maps.Marker({
           position: myLatlng
         });
         myMarker.setMap(map);
       }
-    
+
       // Re-init map before show modal
       $('#myModal').on('show.bs.modal', function(event) {
         var button = $(event.relatedTarget);
@@ -199,7 +195,7 @@
         $("#location-map").css("width", "100%");
         $("#map_canvas").css("width", "100%");
       });
-    
+
       // Trigger map resize event after modal shown
       $('#myModal').on('shown.bs.modal', function() {
         google.maps.event.trigger(map, "resize");

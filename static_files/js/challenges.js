@@ -79,42 +79,41 @@ function createCheckIns(currentUser, checkins) {
     userKeys.forEach(function(userKey, i) {
       if (currentUser == userKey) {
         if (checkInDateObjects[checkInKey][userKey]) {
+          url = checkInDateObjects[checkInKey][userKey].photoURL;
           newInfo = `<li class="list-group-item list-group-item-success"><p><b>You</b> checked in for <b>${checkins.title}</b> on ${checkInKey}</p>
           <p><b>description:</b> ${checkInDateObjects[checkInKey][userKey].description}</p>
 
           <p><b>participant:</b> ${checkInDateObjects[checkInKey][userKey].participantName}</p>
           <div class="container-fluid">
-    
+
           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-lat=${checkInDateObjects[checkInKey][userKey].location.latitude} data-lng=${checkInDateObjects[checkInKey][userKey].location.longitude}>
             Location
           </button>
 
-          <button type="button" class="btn btn-success" data-toggle="modal" data-target="#photoModal">
+          <button type="button" onclick="setImageURL('${url}')" class="btn btn-success" data-toggle="modal" data-target="#photoModal">
             Photo
           </button>
-         </div> 
+         </div>
          <p></p>
          <!--<p><b>location:</b> ${checkInDateObjects[checkInKey][userKey].location.latitude}, ${checkInDateObjects[checkInKey][userKey].location.longitude}</p> -->
+        </li>
          `;
 
 
           // location code if needed
           // <p><b>location:</b> ${checkInDateObjects[checkInKey][userKey].location.latitude}, ${checkInDateObjects[checkInKey][userKey].location.longitude}</p>
 
-          url = checkInDateObjects[checkInKey][userKey].photoURL;
-          
           // not needed atm because photo appears in modal
+          // Before: showed picture in the expanded card
           //newInfo = newInfo + checkURL(url);
-        
+
           $('#checkinFeed').append(newInfo);
-          $('#photoModal #image').append(checkURL(url));
-          //$('#photoModal #image').append(checkURL(url));
-          
         } else {
           $('#checkinFeed').append(`<li class="list-group-item list-group-item-danger"><b>You</b> missed a check-in for <b>${checkins.title}</b> on ${checkInKey}</li>`);
         }
       } else {
         if (checkInDateObjects[checkInKey][userKey]) {
+          url = checkInDateObjects[checkInKey][userKey].photoURL;
           newInfo = `<li class="list-group-item list-group-item-info"><p><b>${checkInDateObjects[checkInKey][userKey].participantName}</b> checked in for <b>${checkins.title}</b> on ${checkInKey}</p>
           <p><b>description:</b> ${checkInDateObjects[checkInKey][userKey].description}</p>
           <p><b>participant:</b> ${checkInDateObjects[checkInKey][userKey].participantName}</p>
@@ -122,22 +121,23 @@ function createCheckIns(currentUser, checkins) {
           Location
           </button>
 
-          <button type="button" class="btn btn-success" data-toggle="modal" data-target="#photoModal">
+          <button type="button" onclick="setImageURL('${url}')" class="btn btn-success" data-toggle="modal" data-target="#photoModal">
           Photo
           </button>
-          </div> 
+          </div>
           <p></p>
-          
+          </li>
           `;
 
-          // location code 
+          // location code
           // <p><b>location:</b> ${checkInDateObjects[checkInKey][userKey].location.latitude}, ${checkInDateObjects[checkInKey][userKey].location.longitude}</p>
 
-          url = checkInDateObjects[checkInKey][userKey].photoURL;
 
           // not needed atm because photo appears in modal
+          // Before: showed picture in the expanded card
+
           //newInfo = newInfo + checkURL(url);
-        
+
           $('#checkinFeed').append(newInfo);
         } else {
           $('#checkinFeed').append(`<li class="list-group-item list-group-item-warning"><b>${checkins.participantNames[i]}</b> missed a check-in for <b>${checkins.title}</b> on ${checkInKey}</li>`);
@@ -147,9 +147,18 @@ function createCheckIns(currentUser, checkins) {
 
     });
   });
-
-
 }
+
+
+function setImageURL(url) {
+  console.log('here', url);
+  if (url == 'someURL') {
+    $('#image').html(`<p>No image uploaded<p>`);
+  } else {
+    $('#image').html(`<img class="img-fluid" src="${url}" />`);
+  }
+}
+
 
 function displayChallengeDetails() {
   let currentUser = firebase.auth().currentUser;
