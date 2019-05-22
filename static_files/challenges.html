@@ -14,6 +14,11 @@
     <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-database.js"></script>
+
+    <!-- Maps api KEY-->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVLJ0ancnyRzsLbznksZIaTSO5GqayRpw&callback=initMap"
+    type="text/javascript"></script>
+    
     <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#config-web-app -->
 
@@ -99,17 +104,112 @@
       <h1>Challenge Details: </h1>
       <div class="row">
         <div class="col">
-          <div id='challengeInfo'></div>
+          <div id='challengeInfo'>  </div>
         </div>
         <div class="col-2"></div>
         <div class="col">
           <h2>Checkin Feed</h2>
           <ul class="list-group" id='checkinFeed'>
+              <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                          <div class="row">
+                              <div class="col-md-12 modal_body_map">
+                                <div class="location-map" id="location-map">
+                                  <div style="width: 600px; height: 400px;" id="map_canvas"></div>
+                                </div>
+                              </div>
+                            </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="modal fade" id="photoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="image"> </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
           </ul>
         </div>
       </div>
-      <div id='status'></div>
+      <div id='status'> </div>
     </div>
 
+   <script> function getPicture(){
+      url = checkInDateObjects[checkInKey][userKey].photoURL;
+      site =checkURL(url);
+      return site;
+   };
+   </script> 
+   <script> $(document).ready(function() {
+      var map = null;
+      var myMarker;
+      var myLatlng;
+    
+      function initializeGMap(lat, lng) {
+        myLatlng = new google.maps.LatLng(lat, lng);
+    
+        var myOptions = {
+          zoom: 13.5,
+          zoomControl: true,
+          center: myLatlng,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+    
+        map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+    
+        myMarker = new google.maps.Marker({
+          position: myLatlng
+        });
+        myMarker.setMap(map);
+      }
+    
+      // Re-init map before show modal
+      $('#myModal').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget);
+        initializeGMap(button.data('lat'), button.data('lng'));
+        $("#location-map").css("width", "100%");
+        $("#map_canvas").css("width", "100%");
+      });
+    
+      // Trigger map resize event after modal shown
+      $('#myModal').on('shown.bs.modal', function() {
+        google.maps.event.trigger(map, "resize");
+        map.setCenter(myLatlng);
+      });
+    });
+    </script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<!--<script src="maps.js"></script> -->
   </body>
 </html>
