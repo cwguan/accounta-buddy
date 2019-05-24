@@ -11,7 +11,8 @@ User: {
   name: String,
   email: String,
   balance: Integer,
-  challenges: [String]
+  challenges: [String],
+  reminders: [String]
 }
 
 /**

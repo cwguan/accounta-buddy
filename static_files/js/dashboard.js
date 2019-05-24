@@ -45,11 +45,12 @@ function createChallengeView(challenge, i) {
 
   // Check if buddy has checked-in today
   let buddyUID;
-  for (participant in challenge.participants) {
+  challenge.participants.forEach((participant) => {
     if (participant != currentUser.uid) {
       buddyUID = participant;
     }
-  }
+  });
+
   if (challenge.hasOwnProperty('checkIns') &&
       challenge.checkIns.hasOwnProperty(getCurrentDate()) &&
       challenge.checkIns[getCurrentDate()].hasOwnProperty(buddyUID)) {
@@ -60,7 +61,7 @@ function createChallengeView(challenge, i) {
   let headerColor = '#f5c6cb';
   let checkInBtnText = "Check-In";
   let remindBuddyBtn = buddyHasCheckedIn ? "" :
-                      `<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#remindBuddyModal" onclick="sendReminderEmail('${challenge.uid}');">Remind Buddy</button>`;
+                      `<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#remindBuddyModal" onclick="sendReminder('${challenge.title}', '${buddyUID}');">Remind Buddy</button>`;
 
   if (haveCheckedIn) {
     headerColor = 'rgba(0,0,0,.03)';
@@ -93,8 +94,22 @@ function createChallengeView(challenge, i) {
 }
 
 
-// TODO TODO TODO Look into emails on firebase
-function sendReminderEmail(challengeUID) {
+// Send a reminder to the buddy specified by buddyUID
+function sendReminder(challengeTitle, buddyUID) {
+  let currentUser = firebase.auth().currentUser;
+  let database = firebase.database();
+
+  let reminder = `${getCurrentDate()} ${getCurrentTime()}: ${currentUser.displayName} sent you a reminder to check-in for ${challengeTitle}`;
+
+  database.ref('users/' + buddyUID + '/reminders').once('value', (snapshot) => {
+    let reminders = [];
+    if (snapshot && snapshot.val()) {
+      reminders = snapshot.val();
+    }
+
+    reminders.push(reminder);
+    database.ref('users/' + buddyUID + '/reminders').update(reminders);
+  });
 }
 
 
@@ -278,27 +293,25 @@ function updateBalancesOnCheckIn(cost, otherUsers) {
 }
 
 
+function clearAllReminders(snapshot) {
+  // Clear list of reminders
+  $("#remindersListGroup").html("");
+  $("#remindersListGroup").append(`<li class="list-group-item">No Reminders to Display</li>`);
+
+
+  // Clear the reminders from the database
+  let currentUser = firebase.auth().currentUser;
+  let database = firebase.database();
+  database.ref('users/' + currentUser.uid + '/reminders').remove();
+}
+
+
 function goToChallengeDetails(challengeUID) {
   window.location.href = 'challenges.html?challenge=' + challengeUID;
 }
 
 
 $(document).ready(() => {
-  // // TODO Currently pretending Chris (uid:1) is logged in, will need to update current logged in user
-  // $.ajax({
-  //     url: 'challenges/1',
-  //     type: 'GET',
-  //     dataType : 'json',
-  //     success: (data) => {
-  //       console.log('Received challenges for user 1');
-  //       const dataKeys = Object.keys(data);
-  //       dataKeys.forEach((challenge, i) => {
-  //         $('#currentChallenges').append(createChallengeView(data[challenge], i));
-  //       });
-  //     },
-  //   });
-
-  // define a generic Ajax error handler:
   $(document).ajaxError(() => {
     $('#status').html('Error: unknown ajaxError!');
   });
