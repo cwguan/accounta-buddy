@@ -140,7 +140,7 @@ function displayReminders() {
       $("#remindersListGroup").append(`<li class="list-group-item">No Reminders to Display</li>`);
     } else {
       let reminders = snapshot.val();
-      reminders.slice.reverse().forEach((reminder, i) => {
+      reminders.slice().reverse().forEach((reminder, i) => {
         $("#remindersListGroup").append(`<li class="list-group-item">${reminder}</li>`);
       })
    }
