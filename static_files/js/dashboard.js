@@ -15,6 +15,7 @@ var mimeTypeToExtension = {
 let currentImage = {};
 
 
+// Helper method to handle user photo uploads
 function readURL(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
@@ -28,6 +29,55 @@ function readURL(input) {
         currentImage.extension = mimeTypeToExtension[currentImage.file.type];
     }
 }
+
+
+// Displays all of the user's current challenges on the dashboard
+function displayChallenges() {
+  let currentUser = firebase.auth().currentUser;
+  let database = firebase.database();
+
+  // Get currentUser's info from the database
+  database.ref('users/' + currentUser.uid).once('value').then(function(snapshot) {
+    let challenges = snapshot.val().challenges;
+
+    // Retrieve each challenge from the database and append it to the challenge view
+    challenges.forEach((challenge, i) => {
+      database.ref('challenges/' + challenge).once('value').then(function(snapshot) {
+        $('#currentChallenges').append(createChallengeView(snapshot.val(), i));
+      });
+    });
+  });
+}
+
+
+// Add the listener to the currentUser's reminders feed to update as database updates
+function displayReminders() {
+  let currentUser = firebase.auth().currentUser;
+  let database = firebase.database();
+
+  database.ref('users/' + currentUser.uid + "/reminders").on('value', (snapshot) => {
+    if (!snapshot || !snapshot.val()) {
+      $("#remindersListGroup").append(`<li class="list-group-item">No Reminders to Display</li>`);
+    } else {
+      let reminders = snapshot.val();
+      reminders.slice().reverse().forEach((reminder, i) => {
+        $("#remindersListGroup").append(`<li class="list-group-item">${reminder}</li>`);
+      })
+   }
+  });
+}
+
+// Clear the reminders from the database, listener will display correct
+// "No Reminders to Display" to the UI
+function clearAllReminders(snapshot) {
+  $("#remindersListGroup").html("");
+
+  // Clear the reminders from the database
+  let currentUser = firebase.auth().currentUser;
+  let database = firebase.database();
+  database.ref('users/' + currentUser.uid + '/reminders').remove();
+}
+
 
 // Create a standard view a challenge a user is participating in
 // Each challenge is a part of a collapsible accordion
@@ -113,47 +163,14 @@ function sendReminder(challengeTitle, buddyUID) {
 }
 
 
-function displayChallenges() {
-  let currentUser = firebase.auth().currentUser;
-  let database = firebase.database();
-
-  // Get currentUser's info from the database
-  database.ref('users/' + currentUser.uid).once('value').then(function(snapshot) {
-    let challenges = snapshot.val().challenges;
-
-    // Retrieve each challenge from the database and append it to the challenge view
-    challenges.forEach((challenge, i) => {
-      database.ref('challenges/' + challenge).once('value').then(function(snapshot) {
-        $('#currentChallenges').append(createChallengeView(snapshot.val(), i));
-      });
-    });
-  });
-}
-
-
-function displayReminders() {
-  let currentUser = firebase.auth().currentUser;
-  let database = firebase.database();
-
-  database.ref('users/' + currentUser.uid + "/reminders").on('value', (snapshot) => {
-    if (!snapshot || !snapshot.val()) {
-      $("#remindersListGroup").append(`<li class="list-group-item">No Reminders to Display</li>`);
-    } else {
-      let reminders = snapshot.val();
-      reminders.slice().reverse().forEach((reminder, i) => {
-        $("#remindersListGroup").append(`<li class="list-group-item">${reminder}</li>`);
-      })
-   }
-  });
-}
-
-
+// Show the coordinates in the check-in modal
 function showPosition(position) {
   $('#latitude').attr('value', position.coords.latitude)
   $('#longitude').attr('value', position.coords.longitude)
 }
 
 
+// Get the current user's location through browser method
 function getLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
@@ -163,7 +180,7 @@ function getLocation() {
 }
 
 
-// Set the onclick of the submit check-in button to be with the right chalelnge uid
+// Set the onclick of the submit check-in button to be with the right challenge uid
 function setCheckInChallenge(challengeUID) {
   $('#submitCheckInBtn').attr('onclick', `submitCheckIn('${challengeUID}');`);
 }
@@ -186,6 +203,7 @@ function submitCheckIn(challengeUID) {
   let checkInTime = getCurrentTime();
   let date = getCurrentDate();
 
+  // Create new check-in object with initial parameters
   let update = {
     participantName: currentUser.displayName,
     checkInTime: checkInTime,
@@ -218,6 +236,7 @@ function submitCheckIn(challengeUID) {
       needToUpdateBalance = true;
     }
 
+    // If the user uploaded a file, upload it to our Firebase Storage, get downloadURL to display
     if (currentImage.file) {
       var uploadTask = storageRef.child(`${challengeUID}/${date}/${currentUser.uid}.${currentImage.extension}`).put(currentImage.file);
       uploadTask.on('state_changed', function(snapshot) {
@@ -268,28 +287,6 @@ function submitCheckIn(challengeUID) {
 }
 
 
-// Gets time in HH:DD in correct format for database
-function getCurrentTime() {
-  let tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
-  let localISOTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
-
-  // TODO: FIX, IT'S HACKY
-  let checkInTime = localISOTime.slice(localISOTime.indexOf("T") + 1, localISOTime.indexOf(":") + 3);
-  return checkInTime;
-}
-
-
-// Gets date in YYYY-MM-DD in correct format for database
-function getCurrentDate() {
-  let tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
-  let localISOTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
-
-  // TODO: FIX, IT'S HACKY
-  let checkInDate = localISOTime.slice(0, localISOTime.indexOf("T"));
-  return checkInDate;
-}
-
-
 // Update balances when a user submits a check-in
 function updateBalancesOnCheckIn(cost, otherUsers) {
   let currentUser = firebase.auth().currentUser;
@@ -309,19 +306,8 @@ function updateBalancesOnCheckIn(cost, otherUsers) {
 }
 
 
-function clearAllReminders(snapshot) {
-  // Clear list of reminders
-  $("#remindersListGroup").html("");
-  $("#remindersListGroup").append(`<li class="list-group-item">No Reminders to Display</li>`);
-
-
-  // Clear the reminders from the database
-  let currentUser = firebase.auth().currentUser;
-  let database = firebase.database();
-  database.ref('users/' + currentUser.uid + '/reminders').remove();
-}
-
-
+// Navigate to the challenge Details Page w/ challenge UID as a query string
+// to be able to display the correct information
 function goToChallengeDetails(challengeUID) {
   window.location.href = 'challenges.html?challenge=' + challengeUID;
 }
