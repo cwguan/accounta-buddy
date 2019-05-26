@@ -69,12 +69,15 @@ function checkURL(url) {
 
 
 function createCheckIns(currentUser, checkins) {
-
+  checkInTime = checkins.checkInDeadline;
+  var timeSplit = checkInTime.split(":");
+  currentTime = parseInt((new Date().getTime()/1000).toFixed(0));
   checkInDateObjects = checkins.checkIns;
   checkInKeys = Object.keys(checkInDateObjects);
   checkInKeys = checkInKeys.reverse();
   userKeys = Object.values(checkins.participants);
   checkInKeys.forEach(function(checkInKey) {
+    deadline = parseInt((new Date(checkInKey).getTime() / 1000 + 60*timeSplit[1] + 3600*timeSplit[0] +25200).toFixed(0));
     $('#checkinFeed').append(`<li class="list-group-item"><b>${checkInKey}</b></li>`);
     userKeys.forEach(function(userKey, i) {
       if (currentUser == userKey) {
@@ -109,7 +112,9 @@ function createCheckIns(currentUser, checkins) {
 
           $('#checkinFeed').append(newInfo);
         } else {
-          $('#checkinFeed').append(`<li class="list-group-item list-group-item-danger"><b>You</b> missed a check-in for <b>${checkins.title}</b> on ${checkInKey}</li>`);
+          if(currentTime > deadline) {
+            $('#checkinFeed').append(`<li class="list-group-item list-group-item-danger"><b>You</b> missed a check-in for <b>${checkins.title}</b> on ${checkInKey}</li>`);
+          }  
         }
       } else {
         if (checkInDateObjects[checkInKey][userKey]) {
@@ -140,7 +145,10 @@ function createCheckIns(currentUser, checkins) {
 
           $('#checkinFeed').append(newInfo);
         } else {
-          $('#checkinFeed').append(`<li class="list-group-item list-group-item-warning"><b>${checkins.participantNames[i]}</b> missed a check-in for <b>${checkins.title}</b> on ${checkInKey}</li>`);
+          if (currentTime > deadline) {
+            $('#checkinFeed').append(`<li class="list-group-item list-group-item-warning"><b>${checkins.participantNames[i]}</b> missed a check-in for <b>${checkins.title}</b> on ${checkInKey}</li>`);
+          }
+
         }
       }
 
