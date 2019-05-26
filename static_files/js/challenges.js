@@ -83,7 +83,9 @@ function createCheckIns(currentUser, checkins) {
       if (currentUser == userKey) {
         if (checkInDateObjects[checkInKey][userKey]) {
           url = checkInDateObjects[checkInKey][userKey].photoURL;
-          newInfo = `<li class="list-group-item list-group-item-success"><p><b>You</b> checked in for <b>${checkins.title}</b> on ${checkInKey}</p>
+          newInfo = `<li class="list-group-item list-group-item-success">
+          <details>
+          <summary><p><b>You</b> checked in for <b>${checkins.title}</b> on ${checkInKey}</p></summary>
           <p><b>description:</b> ${checkInDateObjects[checkInKey][userKey].description}</p>
 
           <p><b>participant:</b> ${checkInDateObjects[checkInKey][userKey].participantName}</p>
@@ -98,7 +100,7 @@ function createCheckIns(currentUser, checkins) {
           </button>
          </div>
          <p></p>
-         <!--<p><b>location:</b> ${checkInDateObjects[checkInKey][userKey].location.latitude}, ${checkInDateObjects[checkInKey][userKey].location.longitude}</p> -->
+         <!--<p><b>location:</b> ${checkInDateObjects[checkInKey][userKey].location.latitude}, ${checkInDateObjects[checkInKey][userKey].location.longitude}</p> --></details>
         </li>
          `;
 
@@ -114,12 +116,14 @@ function createCheckIns(currentUser, checkins) {
         } else {
           if(currentTime > deadline) {
             $('#checkinFeed').append(`<li class="list-group-item list-group-item-danger"><b>You</b> missed a check-in for <b>${checkins.title}</b> on ${checkInKey}</li>`);
-          }  
+          }
         }
       } else {
         if (checkInDateObjects[checkInKey][userKey]) {
           url = checkInDateObjects[checkInKey][userKey].photoURL;
-          newInfo = `<li class="list-group-item list-group-item-info"><p><b>${checkInDateObjects[checkInKey][userKey].participantName}</b> checked in for <b>${checkins.title}</b> on ${checkInKey}</p>
+          newInfo = `<li class="list-group-item list-group-item-info">
+          <details>
+          <summary><p><b>${checkInDateObjects[checkInKey][userKey].participantName}</b> checked in for <b>${checkins.title}</b> on ${checkInKey}</p></summary>
           <p><b>description:</b> ${checkInDateObjects[checkInKey][userKey].description}</p>
           <p><b>participant:</b> ${checkInDateObjects[checkInKey][userKey].participantName}</p>
           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-lat=${checkInDateObjects[checkInKey][userKey].location.latitude} data-lng=${checkInDateObjects[checkInKey][userKey].location.longitude}>
@@ -130,7 +134,7 @@ function createCheckIns(currentUser, checkins) {
           Photo
           </button>
           </div>
-          <p></p>
+          <p></p></details>
           </li>
           `;
 
