@@ -1,20 +1,15 @@
 
 
-function getBalance(currentUser){
+function updateBalance5(){
   let currentUser = firebase.auth().currentUser;
-  let currentUID = currentUser.uid;
   let database = firebase.database();
-  var href = window.location.href;
-  var challengeUID = href.split('?challenge=')[1];
-
-  database.ref('users/' + currentUser.uid).once('value').then(function(snapshot) {
-    let balance = snapshot.val().balance;
-
-    database.ref('challenges/' + challengeUID).once('value').then(function(snapshot) {
-      
-    });
+  let change = 5;
+  database.ref('users/' + currentUser.uid + '/balance').once('value').then(function(snapshot) {
+    let newBalance = snapshot.val() + change;
+    database.ref('users/' + currentUser.uid + '/balance').set(newBalance);
+    $('#userBalance').html(`<p><b>Current balance:</b> ${newBalance}</p>`);
   });
-  $('#challengeInfo').append("current balance: ", balance);
+  
 }
 
 
