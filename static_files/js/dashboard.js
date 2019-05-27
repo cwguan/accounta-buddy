@@ -14,6 +14,27 @@ var mimeTypeToExtension = {
 
 let currentImage = {};
 
+// Firebase init method to check for logged-in users and displaying the correct content
+initApp = function() {
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      console.log("logged in");
+      displayChallenges();
+      displayReminders();
+    } else {
+      // User is signed out, display correct content
+      console.log("not logged in");
+      window.location = '/login.html';
+    }
+  }, function(error) {
+    console.log(error);
+  });
+};
+
+window.addEventListener('load', function() {
+  initApp();
+});
+
 
 // Helper method to handle user photo uploads
 function readURL(input) {
