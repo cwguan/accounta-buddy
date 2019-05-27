@@ -1,4 +1,24 @@
-// TODO pop up some modal/view to check-in
+// Firebase init method to check for logged-in users and displaying the correct content
+initApp = function() {
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      console.log("logged in");
+      displayChallengeDetails();
+    } else {
+      // User is signed out, display correct content
+      console.log("not logged in");
+      window.location = '/login.html';
+    }
+  }, function(error) {
+    console.log(error);
+  });
+};
+
+window.addEventListener('load', function() {
+  initApp();
+});
+
+
 // Create a standard view a challenge a user is participating in
 // Each challenge is a part of a collapsible accordion
 function createChallengeView(challenge, i) {
@@ -21,44 +41,6 @@ function createChallengeView(challenge, i) {
 }
 
 
-//depreciated code for checkins button
-/*function displayAllCheckins() {
-  let currentUser = firebase.auth().currentUser;
-  let database = firebase.database();
-  var href = window.location.href;
-  var challengeUID = href.split('?challenge=')[1];
-
-  // Get currentUser's info from the database
-  database.ref('users/' + currentUser.uid).once('value').then(function(snapshot) {
-    let challenges = snapshot.val().challenges;
-
-    // Retrieve each challenge from the database and append it to the challenge view
-    challenges.forEach((challenge) => {
-      database.ref('challenges/' + challengeUID + '/checkIns').once('value').then(function(snapshot) {
-        getCheckins(snapshot.val());
-      });
-    });
-  });
-}
-
-function getCheckins(checkins) {
-  var keys = Object.keys(checkins);
-  keys.forEach(function(key) {
-    $('#challengeInfo').append(`<p><b>Date:</b> ${key}<p>`);
-    userKeys = Object.keys(checkins[key]);
-    //need to change location in below block with whatever location API thing we have
-    userKeys.forEach(function(userKey) {
-      $('#challengeInfo').append(`<p><b>Time:</b> ${checkins[key][userKey].checkInTime}</p>
-          <p><b>description:</b> ${checkins[key][userKey].description}</p>
-          <p><b>location:</b> ${checkins[key][userKey].location.latitude}, ${checkins[key][userKey].location.longitude}</p>
-          <p><b>participant:</b> ${checkins[key][userKey].participantName}</p>
-          <img src="${checkins[key][userKey].photoURL}" />`);
-    });
-
-  });
-  console.log(info);
-  return info;
-}*/
 function checkURL(url) {
   if (url == 'someURL') {
     return `<p>No image uploaded<p></li>`;
@@ -192,25 +174,7 @@ function displayChallengeDetails() {
 }
 
 
-
-
-
-
 $(document).ready(() => {
-  // // TODO Currently pretending Chris (uid:1) is logged in, will need to update current logged in user
-  // $.ajax({
-  //     url: 'challenges/1',
-  //     type: 'GET',
-  //     dataType : 'json',
-  //     success: (data) => {
-  //       console.log('Received challenges for user 1');
-  //       const dataKeys = Object.keys(data);
-  //       dataKeys.forEach((challenge, i) => {
-  //         $('#currentChallenges').append(createChallengeView(data[challenge], i));
-  //       });
-  //     },
-  //   });
-
   // define a generic Ajax error handler:
   $(document).ajaxError(() => {
     $('#status').html('Error: unknown ajaxError!');

@@ -9,46 +9,12 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   <script src="jquery-3.3.1.min.js"></script>
-  <script src="./js/createchallenge.js"></script>
   <!-- The core Firebase JS SDK is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-database.js"></script>
-  <!-- TODO: Add SDKs for Firebase products that you want to use
-   https://firebase.google.com/docs/web/setup#config-web-app -->
-
-   <script>
-   // Your web app's Firebase configuration
-   var firebaseConfig = {
-     apiKey: "AIzaSyCKRKysCmOlJF8oSWqoPeTuNnRsuEj1H6Y",
-     authDomain: "accounta-buddy-eeecf.firebaseapp.com",
-     databaseURL: "https://accounta-buddy-eeecf.firebaseio.com",
-     projectId: "accounta-buddy-eeecf",
-     storageBucket: "accounta-buddy-eeecf.appspot.com",
-     messagingSenderId: "207844433217",
-     appId: "1:207844433217:web:c60846fdf9f5039e"
-   };
-   // Initialize Firebase
-   firebase.initializeApp(firebaseConfig);
-   initApp = function() {
-     firebase.auth().onAuthStateChanged(function(user) {
-       if (user) {
-         console.log("logged in");
-         preparePage();
-       } else {
-         // User is signed out, display correct content
-         console.log("not logged in");
-         window.location = '/login.html';
-       }
-     }, function(error) {
-       console.log(error);
-     });
-   };
-   window.addEventListener('load', function() {
-     initApp();
-   });
-   </script>
-
+  <script src="./js/common.js"></script>
+  <script src="./js/createchallenge.js"></script>
   </head>
 <body>
       <nav class="navbar navbar-expand-lg navbar-light bg-light">

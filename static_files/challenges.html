@@ -9,52 +9,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="jquery-3.3.1.min.js"></script>
-    <script src="./js/challenges.js"></script>
-    <script src="./js/common.js"></script>
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-database.js"></script>
+    <script src="./js/common.js"></script>
+    <script src="./js/challenges.js"></script>
 
     <!-- Maps api KEY-->
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVLJ0ancnyRzsLbznksZIaTSO5GqayRpw&callback=initMap"
     type="text/javascript"></script>
-
-    <!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#config-web-app -->
-
-     <script>
-     // Your web app's Firebase configuration
-     var firebaseConfig = {
-       apiKey: "AIzaSyCKRKysCmOlJF8oSWqoPeTuNnRsuEj1H6Y",
-       authDomain: "accounta-buddy-eeecf.firebaseapp.com",
-       databaseURL: "https://accounta-buddy-eeecf.firebaseio.com",
-       projectId: "accounta-buddy-eeecf",
-       storageBucket: "accounta-buddy-eeecf.appspot.com",
-       messagingSenderId: "207844433217",
-       appId: "1:207844433217:web:c60846fdf9f5039e"
-     };
-     // Initialize Firebase
-     firebase.initializeApp(firebaseConfig);
-     initApp = function() {
-       firebase.auth().onAuthStateChanged(function(user) {
-         if (user) {
-           console.log("logged in");
-           displayChallengeDetails();
-         } else {
-           // User is signed out, display correct content
-           console.log("not logged in");
-           window.location = '/login.html';
-         }
-       }, function(error) {
-         console.log(error);
-       });
-     };
-     window.addEventListener('load', function() {
-       initApp();
-     });
-     </script>
-
   </head>
 
   <body>
@@ -102,12 +66,12 @@
         </nav>
 
     <div class="content container">
-      <h1>Challenge Details: </h1>
+      <h1 class="display-1">Challenge Details</h1>
       <div class="row">
         <div class="col">
           <div id='challengeInfo'>  </div>
         </div>
-        <div class="col-2"></div>
+        <div class="col-1"></div>
         <div class="col">
           <h2>Checkin Feed</h2>
           <ul class="list-group" id='checkinFeed'>
@@ -159,50 +123,51 @@
         </div>
       <div id='status'> </div>
     </div>
+    <script>
+      function getPicture(){
+        url = checkInDateObjects[checkInKey][userKey].photoURL;
+        site =checkURL(url);
+        return site;
+      };
+    </script>
+    <script>
+      $(document).ready(function() {
+        var map = null;
+        var myMarker;
+        var myLatlng;
 
-   <script> function getPicture(){
-      url = checkInDateObjects[checkInKey][userKey].photoURL;
-      site =checkURL(url);
-      return site;
-   };
-   </script>
-   <script> $(document).ready(function() {
-      var map = null;
-      var myMarker;
-      var myLatlng;
+        function initializeGMap(lat, lng) {
+          myLatlng = new google.maps.LatLng(lat, lng);
 
-      function initializeGMap(lat, lng) {
-        myLatlng = new google.maps.LatLng(lat, lng);
+          var myOptions = {
+            zoom: 13.5,
+            zoomControl: true,
+            center: myLatlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+          };
 
-        var myOptions = {
-          zoom: 13.5,
-          zoomControl: true,
-          center: myLatlng,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
+          map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 
-        map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+          myMarker = new google.maps.Marker({
+            position: myLatlng
+          });
+          myMarker.setMap(map);
+        }
 
-        myMarker = new google.maps.Marker({
-          position: myLatlng
+        // Re-init map before show modal
+        $('#myModal').on('show.bs.modal', function(event) {
+          var button = $(event.relatedTarget);
+          initializeGMap(button.data('lat'), button.data('lng'));
+          $("#location-map").css("width", "100%");
+          $("#map_canvas").css("width", "100%");
         });
-        myMarker.setMap(map);
-      }
 
-      // Re-init map before show modal
-      $('#myModal').on('show.bs.modal', function(event) {
-        var button = $(event.relatedTarget);
-        initializeGMap(button.data('lat'), button.data('lng'));
-        $("#location-map").css("width", "100%");
-        $("#map_canvas").css("width", "100%");
+        // Trigger map resize event after modal shown
+        $('#myModal').on('shown.bs.modal', function() {
+          google.maps.event.trigger(map, "resize");
+          map.setCenter(myLatlng);
+        });
       });
-
-      // Trigger map resize event after modal shown
-      $('#myModal').on('shown.bs.modal', function() {
-        google.maps.event.trigger(map, "resize");
-        map.setCenter(myLatlng);
-      });
-    });
     </script>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
