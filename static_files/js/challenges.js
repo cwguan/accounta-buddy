@@ -65,7 +65,12 @@ function createCheckIns(currentUser, checkins) {
       if (currentUser == userKey) {
         if (checkInDateObjects[checkInKey][userKey]) {
           url = checkInDateObjects[checkInKey][userKey].photoURL;
-          newInfo = `<li class="list-group-item list-group-item-success">
+          newInfo = `<style> .list-group-usCheck{
+            color: #FFFFFF;
+            background-color:#ED1E79;
+          }
+          </style>
+          <li class="list-group-item list-group-usCheck">
           <details>
           <summary><p><b>You</b> checked in for <b>${checkins.title}</b> on ${checkInKey}</p></summary>
           <p><b>description:</b> ${checkInDateObjects[checkInKey][userKey].description}</p>
@@ -97,13 +102,22 @@ function createCheckIns(currentUser, checkins) {
           $('#checkinFeed').append(newInfo);
         } else {
           if(currentTime > deadline) {
-            $('#checkinFeed').append(`<li class="list-group-item list-group-item-danger"><b>You</b> missed a check-in for <b>${checkins.title}</b> on ${checkInKey}</li>`);
+            $('#checkinFeed').append(`<style> .list-group-youMiss{
+              color: #FFFFFF;
+              background-color:#EA71AB;
+            }
+            </style><li class="list-group-item list-group-youMiss"><b>You</b> missed a check-in for <b>${checkins.title}</b> on ${checkInKey}</li>`);
           }
         }
       } else {
         if (checkInDateObjects[checkInKey][userKey]) {
           url = checkInDateObjects[checkInKey][userKey].photoURL;
-          newInfo = `<li class="list-group-item list-group-item-info">
+          newInfo = `<style> .list-group-buddyCheck{
+            color: #FFFFFF;
+            background-color:#29ABE2;
+          }
+          </style>
+          <li class="list-group-item list-group-buddyCheck">
           <details>
           <summary><p><b>${checkInDateObjects[checkInKey][userKey].participantName}</b> checked in for <b>${checkins.title}</b> on ${checkInKey}</p></summary>
           <p><b>description:</b> ${checkInDateObjects[checkInKey][userKey].description}</p>
@@ -132,7 +146,12 @@ function createCheckIns(currentUser, checkins) {
           $('#checkinFeed').append(newInfo);
         } else {
           if (currentTime > deadline) {
-            $('#checkinFeed').append(`<li class="list-group-item list-group-item-warning"><b>${checkins.participantNames[i]}</b> missed a check-in for <b>${checkins.title}</b> on ${checkInKey}</li>`);
+            $('#checkinFeed').append(`<style> .list-group-buddyMiss{
+              color: #FFFFFF;
+              background-color:#72C6DD;
+            }
+            </style>
+            <li class="list-group-item list-group-buddyMiss"><b>${checkins.participantNames[i]}</b> missed a check-in for <b>${checkins.title}</b> on ${checkInKey}</li>`);
           }
 
         }

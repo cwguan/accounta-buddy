@@ -18,6 +18,23 @@
     <script src="./js/dashboard.js"></script>
   </head>
   <body>
+      <style> .list-group-buddyMiss{
+          color: #FFFFFF;
+          background-color:#72C6DD;
+        }
+        .list-group-buddyCheck{
+            color: #FFFFFF;
+            background-color:#29ABE2;
+          }
+          .list-group-youMiss{
+              color: #FFFFFF;
+              background-color:#EA71AB;
+            }
+          .list-group-usCheck{
+            color: #FFFFFF;
+            background-color:#ED1E79;
+          }
+        </style>
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
           <a class="navbar-brand" href="dashboard.html">Accounta-Buddy</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -85,12 +102,12 @@
             <div class="col">
               <h2>Activity Feed</h2>
               <ul class="list-group">
-                <li class="list-group-item list-group-item-info">Jerry Shu checked in for <b>Create a Meme</b> on 2019-05-11</li>
-                <li class="list-group-item list-group-item-success">You checked in for <b>Create a Meme</b> on 2019-05-11</li>
-                <li class="list-group-item list-group-item-success">You checked in for <b>Create a Meme</b> on 2019-05-10</li>
-                <li class="list-group-item list-group-item-info">Jerry Shu checked in for <b>Create a Meme</b> on 2019-05-10</li>
-                <li class="list-group-item list-group-item-warning">Jerry Shu missed a check-in for <b>Create a Meme</b> on 2019-05-09</li>
-                <li class="list-group-item list-group-item-danger">You missed a check-in for <b>Create a Meme</b> on 2019-05-09</li>
+                <li class="list-group-item list-group-buddyCheck">Jerry Shu checked in for <b>Create a Meme</b> on 2019-05-11</li>
+                <li class="list-group-item list-group-usCheck">You checked in for <b>Create a Meme</b> on 2019-05-11</li>
+                <li class="list-group-item list-group-usCheck">You checked in for <b>Create a Meme</b> on 2019-05-10</li>
+                <li class="list-group-item list-group-buddyCheck">Jerry Shu checked in for <b>Create a Meme</b> on 2019-05-10</li>
+                <li class="list-group-item list-group-buddyMiss">Jerry Shu missed a check-in for <b>Create a Meme</b> on 2019-05-09</li>
+                <li class="list-group-item list-group-youMiss">You missed a check-in for <b>Create a Meme</b> on 2019-05-09</li>
               </ul>
             </div>
           </div>
