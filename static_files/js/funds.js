@@ -11,7 +11,17 @@ function updateBalance5(){
   });
   
 }
-
+function updateBalance10(){
+  let currentUser = firebase.auth().currentUser;
+  let database = firebase.database();
+  let change = 10;
+  database.ref('users/' + currentUser.uid + '/balance').once('value').then(function(snapshot) {
+    let newBalance = snapshot.val() + change;
+    database.ref('users/' + currentUser.uid + '/balance').set(newBalance);
+    $('#userBalance').html(`<p><b>Current balance:</b> ${newBalance}</p>`);
+  });
+  
+}
 
 
 
