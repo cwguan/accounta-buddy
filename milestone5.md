@@ -58,7 +58,8 @@ Additionally, we combined this library with the Google Maps API, using Bootstrap
 
 ## Ambitious Data Display/Visualization
 Some ambitious data display and visualization ideas we had were to have a line chart of your balance of Accounta-Bux over time. 
-### Example
+
+### Chart Example
 ![Milestone5-1](./milestone5-images/ambitious.png)
 
 This could provide users of a good, high-level overview of how they are doing in their challenges. Each point in the chart would produce a tooltip that could give the user some information about which challenge they completed or missed. These insights to the user would allow them to focus on the challenges they are struggling with so that they can reduce the number of times they miss check-ins and remain accountable.
