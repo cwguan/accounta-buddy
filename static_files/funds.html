@@ -94,21 +94,45 @@
           </div>
         </nav>
 
+      <style>.btn-sample {
+        color: #FFFFFF;
+        text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+        background-color: #29abe2;
+        *background-color: #29abe2;
+        background-image: -moz-linear-gradient(left, #ED1E79, #29abe2);
+        background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ED1E79), to(#29abe2));
+        background-image: -webkit-linear-gradient(left, #ED1E79, #29abe2);
+        background-image: -o-linear-gradient(left, #ED1E79, #29abe2);
+        background-image: linear-gradient(to right, #ED1E79, #29abe2);
+        background-repeat: repeat-x;
+        border-color: #29abe2;
+        border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ED1E79', endColorstr='#29abe2', GradientType=0);
+        filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+      }
+      .btn-sample:hover,
+      .btn-sample:focus,
+      .btn-sample:active,
+      .btn-sample.active,
+      .btn-sample.disabled,
+      .btn-sample[disabled] {
+        color: #FFFFFF;
+        background-color: #29abe2;
+        *background-color: #003bb3;
+      }
+      </style>
     <div class="content container">
       <h1 class="display-1">Add Funds</h1>
       <p> </p>
       <div id='status'></div>
-      <button type="button" class="btn btn-success btn-lg" onclick="updateBalance5()">Add 5 Accountabux</button>
+      <button type="button" class="btn btn-sample btn-lg" onclick="updateBalance5()">Add 5 Accountabux</button>
       <p></p>
-<<<<<<< HEAD
-      <button type="button" class="btn btn-success btn-lg" onclick="updateBalance10()">Add 10 Accountabux</button>
+      <button type="button" class="btn btn-sample btn-lg" onclick="updateBalance10()">Add 10 Accountabux</button>
       <p></p>
       <div id='userBalance'> </div> 
-=======
-      <div id='userBalance'> </div>
->>>>>>> b98167424733ddc1cec598b7e423d650fd04cfc0
 
     </div>
+
 
   </body>
 </html>
