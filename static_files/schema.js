@@ -33,6 +33,7 @@ User: {
    uid: String,
    participants: [String],
    participantNames: [String],
+   wantToEnd: [String], 
    title: String,
    description: String,
    cost: Integer,
