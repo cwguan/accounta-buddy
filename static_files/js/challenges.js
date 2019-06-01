@@ -174,6 +174,42 @@ function displayChallengeDetails() {
 }
 
 
+// Function used to end challenges
+function endChallenge() {
+  let currentUser = firebase.auth().currentUser;
+  let database = firebase.database();
+  let href = window.location.href;
+  let challengeUID = href.split('?challenge=')[1];
+
+  database.ref('challenges/' + challengeUID + "/wantToEnd").once('value').then(function(snapshot) {
+    // First user to want to end the challenge
+    if (!snapshot.val()) {
+      let wantToEnd = [];
+      wantToEnd.push(currentUser.uid);
+      database.ref('challenges/' + challengeUID + '/wantToEnd').update(wantToEnd);
+      $('#endChallengeInfo').html('The challenge will end once your buddy decides to end as well.');
+
+    } else {
+      let wantToEndUsers = snapshot.val().join(" ");
+      if (wantToEndUsers.includes(currentUser.uid)) {
+        $('#endChallengeInfo').html('Waiting on your buddy to end challenge.');
+
+      // Both users want to end this challenge, update database accordingly
+      } else {
+        let wantToEnd = snapshot.val();
+        wantToEnd.push(currentUser.uid);
+        let ended = {
+          ended: true
+        };
+        database.ref('challenges/' + challengeUID + '/wantToEnd').update(wantToEnd);
+        database.ref('challenges/' + challengeUID).update(ended);
+        $('#endChallengeInfo').html('This challenge has ended.');
+      }
+    }
+  });
+}
+
+
 $(document).ready(() => {
   // define a generic Ajax error handler:
   $(document).ajaxError(() => {

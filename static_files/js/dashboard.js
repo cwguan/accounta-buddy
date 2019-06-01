@@ -64,7 +64,9 @@ function displayChallenges() {
     // Retrieve each challenge from the database and append it to the challenge view
     challenges.forEach((challenge, i) => {
       database.ref('challenges/' + challenge).once('value').then(function(snapshot) {
-        $('#currentChallenges').append(createChallengeView(snapshot.val(), i));
+        if (!snapshot.val().hasOwnProperty("ended")) {
+          $('#currentChallenges').append(createChallengeView(snapshot.val(), i));
+        }
       });
     });
   });
