@@ -20,7 +20,7 @@
   <body>
     <style>
     @media (min-width: 992px) {
-        .animate {
+        .animateDrop {
           animation-duration: 0.3s;
           -webkit-animation-duration: 0.3s;
           animation-fill-mode: both;
@@ -71,8 +71,12 @@
       .fade li.show {
         opacity: 1;
       }
+      body {
+       background: #007bff;
+       background: linear-gradient(to right, #0062E6, #33AEFF);
+      }
     </style>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light ">
           <a class="navbar-brand" href="#">
               <img src="https://scontent-lax3-2.xx.fbcdn.net/v/t1.15752-9/61448532_410939839635804_5687835463654572032_n.png?_nc_cat=107&_nc_ht=scontent-lax3-2.xx&oh=99fffab177fa727e3287aecf259b4b6d&oe=5D974D13" alt="">
             </a>
@@ -100,7 +104,7 @@
                   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Account
                   </a>
-                  <div class="dropdown-menu dropdown-menu-right animate slideIn" aria-labelledby="navbarDropdown">
+                  <div class="dropdown-menu dropdown-menu-right animateDrop slideIn" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="settings.html">Settings</a>
                     <a class="dropdown-item" href="funds.html">Add Funds</a>
                     <div class="dropdown-divider"></div>
@@ -133,7 +137,7 @@
               <ul class="list-group" id="remindersListGroup">
               </ul>
               <br  />
-              <button type="button" class="btn btn-primary" onclick="clearAllReminders();">Clear All Reminders</button>
+              <button type="button" class="btn btn-primary animateDrop slideIn" onclick="clearAllReminders();">Clear All Reminders</button>
             </div>
 
           </div>
@@ -141,8 +145,8 @@
           <div class="row">
             <div class="col">
               <h2>Activity Feed</h2>
-              <ul class="list-group fade">
-                <li class="list-group-item list-group-item-info">Jerry Shu checked in for <b>Create a Meme</b> on 2019-05-11</li>
+              <ul class="list-group animateDrop slideIn">
+                <li class="list-group-item list-group-item-info ">Jerry Shu checked in for <b>Create a Meme</b> on 2019-05-11</li>
                 <li class="list-group-item list-group-item-success">You checked in for <b>Create a Meme</b> on 2019-05-11</li>
                 <li class="list-group-item list-group-item-success">You checked in for <b>Create a Meme</b> on 2019-05-10</li>
                 <li class="list-group-item list-group-item-info">Jerry Shu checked in for <b>Create a Meme</b> on 2019-05-10</li>

@@ -80,11 +80,11 @@ function displayReminders() {
 
   database.ref('users/' + currentUser.uid + "/reminders").on('value', (snapshot) => {
     if (!snapshot || !snapshot.val()) {
-      $("#remindersListGroup").append(`<li class="list-group-item">No Reminders to Display</li>`);
+      $("#remindersListGroup").append(`<li class="list-group-item animateDrop slideIn">No Reminders to Display</li>`);
     } else {
       let reminders = snapshot.val();
       reminders.slice().reverse().forEach((reminder, i) => {
-        $("#remindersListGroup").append(`<li class="list-group-item">${reminder}</li>`);
+        $("#remindersListGroup").append(`<li class="list-group-item animateDrop slideIn">${reminder}</li>`);
       })
    }
   });
@@ -141,7 +141,7 @@ function createChallengeView(challenge, i) {
     checkInBtnText = "Check-In Again";
   }
 
-  return `<div class="card" id='${challenge.uid}'>
+  return `<div class="card animateDrop slideIn" id='${challenge.uid}'>
     <div class="card-header" id="heading${i}" style="background-color:${headerColor}">
       <h5 class="mb-0">
         <button class="btn btn-link" data-toggle="collapse" data-target="#collapse${i}" aria-expanded="true" aria-controls="collapse${i}">
