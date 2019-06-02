@@ -18,6 +18,60 @@
     <script src="./js/dashboard.js"></script>
   </head>
   <body>
+    <style>
+    @media (min-width: 992px) {
+        .animate {
+          animation-duration: 0.3s;
+          -webkit-animation-duration: 0.3s;
+          animation-fill-mode: both;
+          -webkit-animation-fill-mode: both;
+        }
+      }
+      
+      @keyframes slideIn {
+        0% {
+          transform: translateY(1rem);
+          opacity: 0;
+        }
+        100% {
+          transform:translateY(0rem);
+          opacity: 1;
+        }
+        0% {
+          transform: translateY(1rem);
+          opacity: 0;
+        }
+      }
+      
+      @-webkit-keyframes slideIn {
+        0% {
+          -webkit-transform: transform;
+          -webkit-opacity: 0;
+        }
+        100% {
+          -webkit-transform: translateY(0);
+          -webkit-opacity: 1;
+        }
+        0% {
+          -webkit-transform: translateY(1rem);
+          -webkit-opacity: 0;
+        }
+      }
+      
+      .slideIn {
+        -webkit-animation-name: slideIn;
+        animation-name: slideIn;
+      }
+
+      .fade li {
+        transition: all 0.4s ease-out;
+        opacity: 0;
+        height: 2em;
+      }
+      .fade li.show {
+        opacity: 1;
+      }
+    </style>
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
           <a class="navbar-brand" href="#">
               <img src="https://scontent-lax3-2.xx.fbcdn.net/v/t1.15752-9/61448532_410939839635804_5687835463654572032_n.png?_nc_cat=107&_nc_ht=scontent-lax3-2.xx&oh=99fffab177fa727e3287aecf259b4b6d&oe=5D974D13" alt="">
@@ -46,7 +100,7 @@
                   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Account
                   </a>
-                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                  <div class="dropdown-menu dropdown-menu-right animate slideIn" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="settings.html">Settings</a>
                     <a class="dropdown-item" href="funds.html">Add Funds</a>
                     <div class="dropdown-divider"></div>
@@ -87,7 +141,7 @@
           <div class="row">
             <div class="col">
               <h2>Activity Feed</h2>
-              <ul class="list-group">
+              <ul class="list-group fade">
                 <li class="list-group-item list-group-item-info">Jerry Shu checked in for <b>Create a Meme</b> on 2019-05-11</li>
                 <li class="list-group-item list-group-item-success">You checked in for <b>Create a Meme</b> on 2019-05-11</li>
                 <li class="list-group-item list-group-item-success">You checked in for <b>Create a Meme</b> on 2019-05-10</li>
