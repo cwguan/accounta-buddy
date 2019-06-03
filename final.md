@@ -71,3 +71,5 @@
   - Javascript file in charge of taking location data and displaying it on a map using google maps API for the challenge details page.
 
 ##Presentation Link
+
+[https://docs.google.com/presentation/d/1PxnX8FuCqUlW6yn9LSbm_ECKFXjpEOG6tp1_NAngTc0/edit?usp=sharing](https://docs.google.com/presentation/d/1PxnX8FuCqUlW6yn9LSbm_ECKFXjpEOG6tp1_NAngTc0/edit?usp=sharing)
