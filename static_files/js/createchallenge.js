@@ -1,3 +1,7 @@
+/*The javascript file for the challenge creation page.
+Hits the database to retrieve user emails to help user add a buddy as well as writing new challenges to the database using this file’s’ functions.
+Updates the users and their buddy’s info in the database as well.*/
+
 // Firebase init method to check for logged-in users and displaying the correct content
  initApp = function() {
    firebase.auth().onAuthStateChanged(function(user) {

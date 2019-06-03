@@ -1,4 +1,4 @@
-
+/* Javascript file in charge of taking location data and displaying it on a map using google maps API for the challenge details page.*/
 // Google maps
 $(document).ready(function() {
   var map = null;

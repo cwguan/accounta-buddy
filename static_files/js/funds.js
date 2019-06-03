@@ -1,3 +1,4 @@
+/*Javascript file in charge of functions on funds page that interacts with the database, changes the funds for the user, and updates the HTML to display the new balance.*/
 initApp = function() {
  firebase.auth().onAuthStateChanged(function(user) {
    if (user) {

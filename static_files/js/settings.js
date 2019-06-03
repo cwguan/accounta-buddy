@@ -1,3 +1,5 @@
+
+/*Javascript file in charge of functions on settings page. This file validates the current password is correct, the new passwords match, and updating a user’s account in Firebase Authentication to be the new password.*/
 initApp = function() {
  firebase.auth().onAuthStateChanged(function(user) {
    if (user) {

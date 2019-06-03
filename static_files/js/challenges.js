@@ -1,3 +1,5 @@
+/*Javascript file for the challenges page in charge of displaying all the information on the page after retrieving it from the database.
+It is also in charge of shrinking and expanding the different cards. It also includes the functionality to be able to end a challenge.*/
 // Firebase init method to check for logged-in users and displaying the correct content
 initApp = function() {
   firebase.auth().onAuthStateChanged(function(user) {
