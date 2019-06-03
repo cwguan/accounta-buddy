@@ -54,7 +54,7 @@
 - dashboard.js
   - The javascript functions for the dashboard page. These include the displays for the reminders as well as all of the involved challenges. It implements all of the functionality needed to fill out and submit a check-in, remind a buddy about a challenge, and go to a challenge’s details.
 - funds.html
-  - This is the page where users add funds to their account. After adding funds, it displays the current balance after adding funds by retrieving it from the database
+  - This is the page where users add funds to their account. After adding funds, it displays the current balance after adding funds by retrieving it from the database.
 - funds.js
   - Javascript file in charge of functions on funds page that interacts with the database, changes the funds for the user, and updates the HTML to display the new balance.
 - login.html
@@ -64,7 +64,7 @@
 - settings.html
   - This is the settings page where the user can modify their account by changing their password.
 - settings.js
-  - Javascript file in charge of functions on settings page. This file validates the current password is correct, the new passwords match, and updating a user’s account in Firebase Authentication to be the new password
+  - Javascript file in charge of functions on settings page. This file validates the current password is correct, the new passwords match, and updating a user’s account in Firebase Authentication to be the new password.
 - common.js
   - The functionalities implemented in this file are code that we found to be used and duplicated in multiple files across our app. Thus, we decided it would make much more sense to consolidate all of these features into one JavaScript file. These include configuring our Firebase project with the right API keys and other helper methods such as retrieving the date and time in a format consistent throughout the entire application.
 - maps.js

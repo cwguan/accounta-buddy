@@ -1,3 +1,5 @@
+/*The javascript functions for the dashboard page. These include the displays for the reminders as well as all of the involved challenges.
+It implements all of the functionality needed to fill out and submit a check-in, remind a buddy about a challenge, and go to a challenge’s details.*/
 // Object mapping to be able to set the right file name in Storage
 var mimeTypeToExtension = {
   "image/gif": "gif",
