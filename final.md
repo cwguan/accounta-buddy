@@ -45,7 +45,7 @@
  - Contributed to UI improvements in check-in feed
  
  
-##Source Code Files
+## Source Code Files
 
 - challenges.html
   - Detailed view of a specific challenge. When clicking on the details button on the main dashboard for a specific challenge, the user is brought to this page. On this page they can see specific details for the challenge, as well as a feed for all of the check-ins between them and their Accountabuddy. Draws data from the Firebase database and displays it on the page. Additionally, also uses the location data from the database to create a visualization using Google Maps API.
@@ -76,11 +76,11 @@
 - maps.js
   - Javascript file in charge of taking location data and displaying it on a map using google maps API for the challenge details page.
 
-##Presentation Link
+## Presentation Link
 
 [https://docs.google.com/presentation/d/1PxnX8FuCqUlW6yn9LSbm_ECKFXjpEOG6tp1_NAngTc0/edit?usp=sharing](https://docs.google.com/presentation/d/1PxnX8FuCqUlW6yn9LSbm_ECKFXjpEOG6tp1_NAngTc0/edit?usp=sharing)
 
-##Demo Video Link
+## Demo Video Link
 
 [https://www.youtube.com/watch?v=epaEriOMrfc&feature=youtu.be](https://www.youtube.com/watch?v=epaEriOMrfc&feature=youtu.be)
 
