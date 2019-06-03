@@ -37,8 +37,14 @@
 - Drew up storyboards for the original design phase
 
 **Nathan Werrede**
-
-
+ 
+ - Wrote code in the app, mostly on the check-in feed and add funds page, along with style tweaks wherever necessary
+ - Implemented Google Maps API into check-in feed to present a map of the check-in's current location
+ - Contributed to writeups and original design and concept of the app
+ - Created prototypes of pages during original design phase
+ - Contributed to UI improvements in check-in feed
+ 
+ 
 ##Source Code Files
 
 - challenges.html
@@ -73,3 +79,8 @@
 ##Presentation Link
 
 [https://docs.google.com/presentation/d/1PxnX8FuCqUlW6yn9LSbm_ECKFXjpEOG6tp1_NAngTc0/edit?usp=sharing](https://docs.google.com/presentation/d/1PxnX8FuCqUlW6yn9LSbm_ECKFXjpEOG6tp1_NAngTc0/edit?usp=sharing)
+
+##Demo Video Link
+
+[https://www.youtube.com/watch?v=epaEriOMrfc&feature=youtu.be](https://www.youtube.com/watch?v=epaEriOMrfc&feature=youtu.be)
+
