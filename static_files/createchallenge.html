@@ -4,6 +4,7 @@ It is also in charge of shrinking and expanding the different cards. It also inc
 <html lang="en">
 <head>
   <title>Create Challenge</title>
+  <link rel="icon" href="https://scontent-lax3-2.xx.fbcdn.net/v/t1.15752-9/61448532_410939839635804_5687835463654572032_n.png?_nc_cat=107&_nc_ht=scontent-lax3-2.xx&oh=99fffab177fa727e3287aecf259b4b6d&oe=5D974D13">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -20,6 +21,9 @@ It is also in charge of shrinking and expanding the different cards. It also inc
   </head>
 <body>
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <a class="navbar-brand" href="dashboard.html">
+              <img src="https://scontent-lax3-2.xx.fbcdn.net/v/t1.15752-9/61448532_410939839635804_5687835463654572032_n.png?_nc_cat=107&_nc_ht=scontent-lax3-2.xx&oh=99fffab177fa727e3287aecf259b4b6d&oe=5D974D13" alt="">
+            </a>
           <a class="navbar-brand" href="dashboard.html">Accounta-Buddy</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -62,7 +66,7 @@ It is also in charge of shrinking and expanding the different cards. It also inc
           </div>
         </nav>
   <div class="content container">
-    <h1 class="display-1">Create a Challenge</h1>
+    <h1 class="display-4">Create a Challenge</h1>
     <div id='status'></div>
     <form>
         <div class="form-group">
@@ -72,6 +76,7 @@ It is also in charge of shrinking and expanding the different cards. It also inc
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchFriendsModal" id="searchFriendsBtn">
           Show All Users
         </button>
+        <p></p>
         <!-- Modal -->
         <div class="modal fade" id="searchFriendsModal" tabindex="-1" role="dialog" aria-labelledby="seearchFriendsModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
@@ -145,11 +150,14 @@ It is also in charge of shrinking and expanding the different cards. It also inc
           <input type="endDate" class="form-control" id="endDate" placeholder="MM/DD/YYYY">
         </div>
 
+
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary btn-block" onclick="onCreateChallenge();" data-toggle="modal" data-target="#successfulCreation">
           Create Challenge
         </button>
-
+<p></p>
+<p></p>
+<p></p>
         <!-- Modal -->
         <div class="modal fade" id="successfulCreation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">

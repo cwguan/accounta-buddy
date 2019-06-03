@@ -43,6 +43,7 @@ function updateBalance10(){
 
 
 
+
 $(document).ready(() => {
   $(document).ajaxError(() => {
     $('#status').html('Error: unknown ajaxError!');

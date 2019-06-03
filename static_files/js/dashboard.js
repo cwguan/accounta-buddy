@@ -338,6 +338,7 @@ function goToChallengeDetails(challengeUID) {
 }
 
 
+
 $(document).ready(() => {
   $(document).ajaxError(() => {
     $('#status').html('Error: unknown ajaxError!');
