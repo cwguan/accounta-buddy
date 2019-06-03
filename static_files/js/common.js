@@ -1,3 +1,6 @@
+/* The functionalities implemented in this file are code that we found to be used and duplicated in multiple files across our app.
+Thus, we decided it would make much more sense to consolidate all of these features into one JavaScript file.
+These include configuring our Firebase project with the right API keys and other helper methods such as retrieving the date and time in a format consistent throughout the entire application.*/
 // Your web app's Firebase configuration
 var firebaseConfig = {
   apiKey: "AIzaSyCKRKysCmOlJF8oSWqoPeTuNnRsuEj1H6Y",

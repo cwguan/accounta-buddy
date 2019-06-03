@@ -1,3 +1,7 @@
+/*This file serves as the source of truth of our data is organized in the database.
+Because each of the pages in the app need to retrieve some form of data, it was important during development that we all knew at any point how to retrieve it.
+schema.js informed us of not only the path/structure to each piece of data but their types as well.*/
+
 // Schema for reference for Firebase Database
 
 /**
@@ -33,7 +37,7 @@ User: {
    uid: String,
    participants: [String],
    participantNames: [String],
-   wantToEnd: [String], 
+   wantToEnd: [String],
    title: String,
    description: String,
    cost: Integer,
