@@ -38,11 +38,14 @@
 
 **Nathan Werrede**
  
- - Wrote code in the app, mostly on the check-in feed and add funds page, along with style tweaks wherever necessary
+ - Contributed to implementation of the check-in feed 
+ - Wrote code for adding balance in the add funds page
+ - Assisted with style tweaks when necessary
  - Implemented Google Maps API into check-in feed to present a map of the check-in's current location
  - Contributed to writeups and original design and concept of the app
- - Created prototypes of pages during original design phase
- - Contributed to UI improvements in check-in feed
+ - Created prototypes of pages and actions during original design phase
+ - Contributed to UI improvements 
+ 
  
  
 ## Source Code Files
